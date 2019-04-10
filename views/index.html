@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Penn Subletting</title>
+    <script src="/static/scripts/lib/jquery.min.js"></script>
+    <script src="/static/scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/styles/styles.css"/>
+  </head>
+  <body>
+    <div class="nav">
+      <h2>Penn Subletting</h2>
+
+    </div>
+    <div class="main-body">
+      <h2>Welcome to Penn Subletting!</h2>
+        <% if (user) { %>
+          <p>Hi <%= user %> | 
+          <a href="/account/logout">Log out</a>
+          </p>
+        <% } else { %>
+          <a href="/account/login"> <button type="button">Log In</button> </a>
+        <br>
+          <a href="/account/signup"> <button type="button">Sign up</button> </a>
+        <% }%>
+    </div>
+  </body>
+</html>
