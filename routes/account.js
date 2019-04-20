@@ -5,23 +5,38 @@ var mongoose = require('mongoose')
 var cookieSession = require('cookie-session')
 
 var User = require('../models/user')
-var isAuthenticated = require('../middlewares/isAuthenticated')
+var validCodes = require('../public/validCodes')
 
 router.get('/signup', function (req, res, next) {
-  res.render('signup')
+  console.log('in get account/signup')
+  // check for invalid entries to form
+  console.log(req.query)
+  if (req.query.valid == validCodes.userExists.num) {
+    res.render('signup.ejs', {message: validCodes.userExists.msg});
+  } else if (req.query.valid == validCodes.serverError.num) {
+    console.log("server error in render")
+    console.log(req.query.valid)
+    res.render('signup.ejs', {message: validCodes.serverError.msg});
+  } else {
+    console.log("render normally")
+    res.render('signup.ejs', {message: ""}); // render normally
+  }
 })
 
 router.post('/signup', function (req, res, next) {
-  var username = req.body.username;
-  var password = req.body.password;
-  var u = new User({ username: username, password: password })
-  u.save(function (err, result) { 
-    if (err) {
-      next(err)
+  console.log('trying to post')
+  var {name, email, password} = req.body;
+  User.addUser(name, email, password, function(errorNum, errormsg) {
+    if (errorNum === null && errormsg === null) {
+      // Render the home page
+      // req.session.email = email
+      // res.redirect('/home');
+      res.send('success')
     } else {
-      res.redirect('/account/login')
+      // Invalid signup
+      res.redirect('/account/signup?valid='+errorNum);
     }
-  })
+  });
 })
 
 router.get('/login', function (req, res) {
@@ -29,20 +44,23 @@ router.get('/login', function (req, res) {
 })
 
 router.post('/login', function (req, res, next) {
-  var username = req.body.username;
-  var password = req.body.password;
-  User.findOne({ username: username, password: password }, function (err, result) { 
-    if (!err && result != null) {
-      req.session.user = username;
-      res.redirect('/')
+  var {email, password} = req.body;
+  User.verifyCreds(email, password, function(err, verified) {
+    if (err) {
+      res.send(err);
+    } else if (!verified) {
+      res.send('Wrong creds');
     } else {
-      next(new Error('Invalid credentials'))
+      // res.send('going to log in' + email);
+      // Render the home page
+      req.session.email = email
+      res.redirect('/home');
     }
-  })
+  });
 })
 
-router.get('/logout', isAuthenticated, function (req, res) {
-  req.session.user = '';
-  res.redirect('/')
-})
+// router.get('/logout', function (req, res) {
+//   req.session.user = '';
+//   res.redirect('/')
+// })
 module.exports = router;

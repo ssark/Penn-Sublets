@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <script src="/static/scripts/lib/jquery.min.js"></script>
+    <script src="/static/scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/styles/styles.css"/>
+  </head>
+  <body>
+    <% if (user) { %>
+      <p>Hi <%= user %> | 
+      <a href="/account/logout">Log out</a>
+      </p>
+    <% } else { %>
+      <a href="/account/login"> <button type="button">Log In</button> </a>
+    <br>
+      <a href="/account/signup"> <button type="button">Sign up</button> </a>
+    <% }%>
+  </body>
+</html>

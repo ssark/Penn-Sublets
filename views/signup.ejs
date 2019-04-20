@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Sign up page</title>
+  </head>
+  <body>
+    <h1>Sign up</h1>
+    <form method="POST">
+      Name: <br/>
+      <input type="text" name="name" required/> <br/>
+      Email: <br/>
+      <input type="email" name="email" required/> <br/>
+      Password: <br/>
+      <input type="password" name="password" required/> <br>
+      <button type="submit">Sign up</button>
+    </form>
+    <%if (message) { %>
+      <font color="red"><%= message %><p></font>
+    <% } %>
+  </body>
+</html>
