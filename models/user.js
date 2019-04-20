@@ -14,13 +14,13 @@ const userSchema = new Schema({
 // callback(errorNum, errormsg)
 userSchema.statics.addUser = function(name, email, password, callback) {
   console.log('in adduser')
+  var newUser = new this({ name: name, email: email, password: password, listings: []});
   this.findOne({ email: email}, function(findErr, user) {
     if (findErr) {
       callback(validCodes.serverError.num, findErr);
     } else if (user) { // User account already exists
       callback(validCodes.userExists.num, validCodes.userExists.msg);
     } else {
-      var newUser = new this({ name: name, email: email, password: password, listings: []});
       newUser.save(function(err, result) {
         if (err) {
           callback(validCodes.serverError.num, err);
