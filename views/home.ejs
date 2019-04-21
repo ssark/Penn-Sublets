@@ -3,6 +3,13 @@
     <script src="/static/scripts/lib/jquery.min.js"></script>
     <script src="/static/scripts/main.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/styles/styles.css"/>
+    <script type="text/javascript">
+      // var loadHome = function () {
+
+      // };
+
+      // window.onload = loadHome;
+    </script>
   </head>
   <body>
     <% if (user) { %>
@@ -14,5 +21,15 @@
     <br>
       <a href="/account/signup"> <button type="button">Sign up</button> </a>
     <% }%>
+    <% if (allListings) { %>
+      <% allListings.forEach(function(listing) { %>
+        <h2>ID: <%= listing._id %></h2>
+        <h2>Title: <%= listing.title %></h2>
+        <h2>Description: <%= listing.description %></h2>
+        <h2>Owner: <%= listing.owner %></h2>
+        <h2>Date posted: <%= listing.date_posted %></h2>
+        <br>
+      <% }); %>
+    <% } %>
   </body>
 </html>

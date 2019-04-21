@@ -10,7 +10,6 @@ var createListing = function(email, title, description, callback) {
   // update person listing arr
   User.findOne({email: email}, function(findErr, user) { 
     if (user) {
-      console.log(user.listings)
       var newListing = new Listing({ owner: user._id, title: title, description: description});
       newListing.save(function(listingErr, listing) {
         if (listingErr) {
@@ -73,11 +72,22 @@ var deleteListing = function(id, callback) {
   })
 }
 
+var getUserListings = function(email, callback) {
+  User.findOne({ email: email }).populate('listings').exec(function(err, user) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, user.listings);
+    }
+  })
+};
+
 var db = {
   createListing: createListing,
   getListingById: getListingById,
   updateListing: updateListing,
-  deleteListing: deleteListing
+  deleteListing: deleteListing,
+  getUserListings: getUserListings
 }
 
 module.exports = db;

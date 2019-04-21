@@ -13,7 +13,14 @@ var getIndex = function(req, res) {
 };
 
 var getHome = function(req, res) {
-  res.render('home.ejs', {user: req.session.email});
+  db.getUserListings(req.session.email, function(err, listings) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.render('home.ejs', {user: req.session.email, allListings: listings});
+    }
+  });
+  
 };
 
 // Get Listing form
