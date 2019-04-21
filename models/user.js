@@ -9,8 +9,6 @@ const userSchema = new Schema({
   listings: [{ type: Schema.Types.ObjectId, ref: 'Listing' }]
 });
 
-// var UserSchema = mongoose.model('User', userSchema)
-
 // callback(errorNum, errormsg)
 userSchema.statics.addUser = function(name, email, password, callback) {
   console.log('in adduser')
@@ -35,9 +33,9 @@ userSchema.statics.addUser = function(name, email, password, callback) {
 userSchema.statics.verifyCreds = function(email, password, callback) {
   this.findOne({ email: email }, function(err, user) {
     if (err) {
-      callback(err, null);
+      callback(validCodes.serverError.num, null);
     } else if (!user) {
-      callback('Account does not exist', null);
+      callback(validCodes.accountNotExist.num, null);
     } else {
       if (password === user.password) {
         callback(null, true); // sending true for verified creds back
@@ -47,23 +45,6 @@ userSchema.statics.verifyCreds = function(email, password, callback) {
     }
   });
 }
-
-userSchema.statics.verifyCreds = function(email, password, callback) {
-  this.findOne({ email: email }, function(err, user) {
-    if (err) {
-      callback(err, null);
-    } else if (!user) {
-      callback('Account does not exist', null);
-    } else {
-      if (password === user.password) {
-        callback(null, true); // sending true for verified creds back
-      } else {
-        callback(null, false);
-      }
-    }
-  });
-}
-
 
 
 module.exports = mongoose.model('User', userSchema);

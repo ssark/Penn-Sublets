@@ -23,13 +23,20 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
 
+// Misc
 app.get('/', routes.getIndex);
+app.get('/home', routes.getHome);
 
+// Listing pages
+app.get('/newListing', routes.getListingForm);
+app.post('/newListing', routes.createListing);
 
-app.get('/home', function (req, res, next) {
-	res.render('home', {user: req.session.email});
-});
+app.get('/listings/:listingId', routes.showListing);
 
+app.get('/listings/edit/:listingId', routes.getEditListingForm);
+app.post('/listings/edit/:listingId', routes.updateListing);
+
+app.delete('/listings/delete/:listingId', routes.deleteListing);
 
 app.use('/account', accountRouter)
 
