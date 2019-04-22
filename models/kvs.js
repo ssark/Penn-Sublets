@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 var User = require('./user')
 var Listing = require('./listing')
 var Booking = require('./booking')
+var Review = require('./review')
 var moment = require('moment')
 
 var createListing = function(email, title, description, callback) {
@@ -80,7 +81,7 @@ var getUserListings = function(email, callback) {
 };
 
 // callback(err, data)
-var createBooking = function(email, listingId, date_to, date_from, callback) {
+var createBooking = function(email, listingId, date_from, date_to, callback) {
   console.log('in db createBooking')
   User.findOne({email: email}, function(userErr, user) { 
     if (userErr) {
@@ -109,6 +110,57 @@ var createBooking = function(email, listingId, date_to, date_from, callback) {
   });
 };
 
+// callback(err, bookings)
+var getListingBookings = function(listingId, callback) {
+  Booking.find({listing: listingId}, function(err, bookings) {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, bookings)
+    }
+  });
+};
+
+// callback(err, data)
+var createReview = function(email, listingId, title, text, callback) {
+  console.log('in db createReview')
+  User.findOne({email: email}, function(userErr, user) { 
+    if (userErr) {
+      callback(userErr, null);
+    } else {
+      console.log('found user')
+      console.log(user)
+      Listing.findById(listingId, function(listingErr, listing) {
+        if (listingErr) {
+          callback(listingErr, null);
+        } else {
+          console.log('found listing')
+          console.log(listing)
+          var newReview = new Review({ user: user, listing: listing, title: title, text: text});
+          newReview.save(function(reviewErr, review) {
+            if (reviewErr) {
+              callback(reviewErr, null)
+            } else {
+              console.log('success review')
+              callback(null, review)
+            }
+          })
+        }
+      });
+    }
+  });
+};
+
+var getListingReviews = function(listingId, callback) {
+  Review.find({listing: listingId}, function(err, reviews) {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, reviews)
+    }
+  });
+};
+
 var db = {
   createListing: createListing,
   getListingById: getListingById,
@@ -116,7 +168,11 @@ var db = {
   deleteListing: deleteListing,
   getUserListings: getUserListings,
   createBooking: createBooking,
-  
+  createReview: createReview,
+  getListingBookings: getListingBookings,
+  getListingReviews: getListingReviews
+
+
 }
 
 module.exports = db;
