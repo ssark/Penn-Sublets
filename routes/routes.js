@@ -93,13 +93,25 @@ var deleteListing = function(req, res) {
   });
 };
 
-var getBookingForm = function(req, res) {
-// get listing for whom to book for in the params, render on the page
+// var getBookingForm = function(req, res) {
+// // get listing for whom to book for in the params, render on the page
 
-};
+// };
 
 var createBooking = function(req, res) {
+  console.log('***************** in createBooking')
+  var email = req.session.email
+  var {listingId, dateFrom, dateTo} = req.body
 
+  db.createBooking(email, listingId, dateFrom, dateTo, function(err, data) {
+    if (data) {
+      console.log('***** SUCCESS')
+      res.status(200).send({'msg': 'success'});
+    } else {
+      console.log('***** gonna send error')
+      res.status(500).send({'msg': 'error'});
+    }
+  });
 };
 
 
@@ -111,8 +123,7 @@ var routes = {
   showListing: showListing,
   getEditListingForm: getEditListingForm,
   updateListing: updateListing,
-  deleteListing: deleteListing, 
-  getBookingForm: getBookingForm,
+  deleteListing: deleteListing,
   createBooking: createBooking
 };
 

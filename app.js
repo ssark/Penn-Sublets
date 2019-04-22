@@ -10,7 +10,8 @@ var routes = require('./routes/routes.js');
 var accountRouter = require('./routes/account.js')
 
 app.engine('html', require('ejs').__express);
-app.set('view engine', 'html');
+app.set('view engine', 'ejs');
+app.locals.moment = require('moment');
 
 app.use('/static', express.static(path.join(__dirname, 'static')))
 
@@ -40,7 +41,7 @@ app.delete('/listings/delete/:listingId', routes.deleteListing);
 
 
 // Booking pages
-app.get('/booking', routes.getBookingForm);
+app.post('/createBooking', routes.createBooking);
 
 app.use('/account', accountRouter)
 

@@ -2,6 +2,7 @@
   <head>
     <title><%= title %></title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
     <script type="text/javascript">
       var loadListing = function() {
         $("#delete-listing").click(function() {
@@ -20,6 +21,33 @@
             }
           });
         });
+
+        $("#book-listing").click(function() {
+          var dateFrom = $('#date-from').val()
+          var dateTo = $('#date-to').val()
+          var listingId = $('#listing_id').val()
+
+          if (moment(dateTo).isBefore(dateFrom)) {
+            alert('Invalid dates! Start date is before end date.')
+          } else {
+            alert('going to post')
+            $.ajax({
+              type: "POST",
+              url: '../createBooking',
+              data: {
+                listingId: listingId,
+                dateFrom: dateFrom,
+                dateTo: dateTo
+              },
+              success: function(data) {
+                alert('Booking successful!');
+              },
+              error: function(data) {
+                alert('error')
+              }
+            });
+          }
+        });
       }
       window.onload = loadListing;
     </script>
@@ -32,6 +60,15 @@
     <h2>Owner: <%= owner %></h2>
     <h2>Date posted: <%= date_posted %></h2>
     <button id='delete-listing'>Delete Listing</button>
+
+    <div class="col-md-3">
+      <h2>Book this listing</h2>
+      <form>
+        From: <input type="date" id="date-from"> <br/>
+        To: <input type="date" id="date-to"> <br/>
+        <button id="book-listing">Book this</button>
+      </form>
+    </div>
   </body>
 </html>
 

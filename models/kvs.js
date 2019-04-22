@@ -80,6 +80,17 @@ var getUserListings = function(email, callback) {
   })
 };
 
+// callback(err, bookings)
+var getListingBookings = function(listingId, callback) {
+  Booking.find({listing: listingId}, function(err, bookings) {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, bookings)
+    }
+  });
+};
+
 // callback(err, data)
 var createBooking = function(email, listingId, date_from, date_to, callback) {
   console.log('in db createBooking')
@@ -89,34 +100,41 @@ var createBooking = function(email, listingId, date_from, date_to, callback) {
     } else {
       console.log('found user')
       console.log(user)
-      Listing.findById(listingId, function(listingErr, listing) {
-        if (listingErr) {
-          callback(listingErr, null);
+
+      Booking.find({listing: listingId}, function(bErr, bookings) {
+        if (bErr) {
+          callback(bErr, null);
         } else {
-          console.log('found listing')
-          console.log(listing)
-          var newBooking = new Booking({ booker: user, listing: listing, date_from: date_from, date_to: date_to});
-          newBooking.save(function(bookingErr, booking) {
-            if (bookingErr) {
-              callback(bookingErr, null)
-            } else {
-              console.log('success booking')
-              callback(null, booking)
+          console.log('found bookings')
+          isOverlap = false
+          bookings.forEach(function(b) {
+            var bfrom = moment(b.date_from)
+            var bto = moment(b.date_to)
+
+            var nFrom = moment(date_from)
+            var nTo = moment(date_to)
+
+            if (nFrom.isBetween(bfrom, bto, null, '[]') || nTo.isBetween(bfrom, bto, null, '[]')) {
+              console.log('Already booked for those dates!')
+              isOverlap = true
             }
-          })
+          });
+
+          if (isOverlap) {
+            callback('Already booked for those dates!', null) // Already booked for those dates
+          } else { // Create booking
+            var newBooking = new Booking({ booker: user, listing: listingId, date_from: date_from, date_to: date_to});
+            newBooking.save(function(bookingErr, booking) {
+              if (bookingErr) {
+                callback(bookingErr, null)
+              } else {
+                console.log('success booking')
+                callback(null, booking)
+              }
+            })
+          }
         }
       });
-    }
-  });
-};
-
-// callback(err, bookings)
-var getListingBookings = function(listingId, callback) {
-  Booking.find({listing: listingId}, function(err, bookings) {
-    if (err) {
-      callback(err, null)
-    } else {
-      callback(null, bookings)
     }
   });
 };
