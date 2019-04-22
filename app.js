@@ -38,6 +38,10 @@ app.post('/listings/edit/:listingId', routes.updateListing);
 
 app.delete('/listings/delete/:listingId', routes.deleteListing);
 
+
+// Booking pages
+app.get('/booking', routes.getBookingForm);
+
 app.use('/account', accountRouter)
 
 

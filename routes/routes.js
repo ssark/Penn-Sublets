@@ -3,6 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
 var cookieSession = require('cookie-session')
+var moment = require('moment')
 
 var User = require('../models/user')
 var Listing = require('../models/listing')
@@ -17,6 +18,7 @@ var getHome = function(req, res) {
     if (err) {
       res.send(err)
     } else {
+      console.log(moment(listings[0].date_posted))
       res.render('home.ejs', {user: req.session.email, allListings: listings});
     }
   });
@@ -91,6 +93,25 @@ var deleteListing = function(req, res) {
   });
 };
 
+var getBookingForm = function(req, res) {
+// get listing for whom to book for in the params, render on the page
+
+
+db.createBooking('a@gmail.com', '5cbcab5821005fcdaf564c88', moment(), moment().add(7, 'd'),function (err, booking) {
+  if (err) {
+    res.send(err)
+  } else {
+    res.send(booking)
+  }
+})
+
+};
+
+var createBooking = function(req, res) {
+
+};
+
+
 var routes = {
   getIndex: getIndex,
   getHome: getHome,
@@ -99,7 +120,9 @@ var routes = {
   showListing: showListing,
   getEditListingForm: getEditListingForm,
   updateListing: updateListing,
-  deleteListing: deleteListing
+  deleteListing: deleteListing, 
+  getBookingForm: getBookingForm,
+  createBooking: createBooking
 };
 
 

@@ -1,16 +1,13 @@
 var mongoose = require('mongoose')
 var User = require('./user')
 var Listing = require('./listing')
-
+var Booking = require('./booking')
+var moment = require('moment')
 
 var createListing = function(email, title, description, callback) {
-  // create the new listing
-  // find the person with the email
-  // save listing
-  // update person listing arr
   User.findOne({email: email}, function(findErr, user) { 
     if (user) {
-      var newListing = new Listing({ owner: user._id, title: title, description: description});
+      var newListing = new Listing({ owner: user, title: title, description: description});
       newListing.save(function(listingErr, listing) {
         if (listingErr) {
           callback(listingErr, null);
@@ -82,12 +79,44 @@ var getUserListings = function(email, callback) {
   })
 };
 
+// callback(err, data)
+var createBooking = function(email, listingId, date_to, date_from, callback) {
+  console.log('in db createBooking')
+  User.findOne({email: email}, function(userErr, user) { 
+    if (userErr) {
+      callback(userErr, null);
+    } else {
+      console.log('found user')
+      console.log(user)
+      Listing.findById(listingId, function(listingErr, listing) {
+        if (listingErr) {
+          callback(listingErr, null);
+        } else {
+          console.log('found listing')
+          console.log(listing)
+          var newBooking = new Booking({ booker: user, listing: listing, date_from: date_from, date_to: date_to});
+          newBooking.save(function(bookingErr, booking) {
+            if (bookingErr) {
+              callback(bookingErr, null)
+            } else {
+              console.log('success booking')
+              callback(null, booking)
+            }
+          })
+        }
+      });
+    }
+  });
+};
+
 var db = {
   createListing: createListing,
   getListingById: getListingById,
   updateListing: updateListing,
   deleteListing: deleteListing,
-  getUserListings: getUserListings
+  getUserListings: getUserListings,
+  createBooking: createBooking,
+  
 }
 
 module.exports = db;
