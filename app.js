@@ -24,6 +24,11 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
 
+// app.use(function(req, res, next) {
+//   res.locals = req.session;
+//   next();
+// });
+
 // Misc
 app.get('/', routes.getIndex);
 app.get('/home', routes.getHome);

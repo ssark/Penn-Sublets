@@ -28,7 +28,7 @@ $(document).ready(function () {
     	htmlCode = "<h5> No reviews yet. Add one with the form below! </h5>"
     } else {
 	    reviews.forEach(function(r) {
-	  		htmlCode += "<h5>"+ r.title + "</h5>"
+	  		htmlCode += "<h5 class=\"strong\">"+ r.title + "</h5>"
 	  		htmlCode += "<p class=\"ma-p ma-p--small\">"+ r.text + "</p>"
 	  		htmlCode += "<div class=\"ma-label ma-label--simple ma-label--simple--small\"> <a href=\"/users/" + r.user._id + "\">" + r.user.name + "</a> - "
 	  		htmlCode += moment(r.date_posted).format('MMMM D, YYYY') + "</div>"
@@ -95,7 +95,7 @@ $(document).ready(function () {
 			.done(function(data) {
 				console.log(data)
 				htmlCode = ""
-			  	htmlCode += "<h5>"+ data.title + "</h5>"
+			  	htmlCode += "<h5 class=\"strong\">"+ data.title + "</h5>"
 		  		htmlCode += "<p class=\"ma-p ma-p--small\">"+ data.text + "</p>"
 		  		htmlCode += "<div class=\"ma-label ma-label--simple ma-label--simple--small\"> <a href=\"/users/" + data.user._id + "\">" + data.user.name + "</a> - "
 		  		htmlCode += moment(data.date_posted).format('MMMM D, YYYY') + "</div>"

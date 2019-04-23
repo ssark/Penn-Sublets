@@ -37,9 +37,12 @@ userSchema.statics.verifyCreds = function(email, password, callback) {
     } else if (!user) {
       callback(validCodes.accountNotExist.num, null);
     } else {
+      console.log('accoun exists')
       if (password === user.password) {
+        console.log('right password user:', user)
         callback(null, user); // sending user for verified creds back
       } else {
+        console.log('wrong password')
         callback(null, false);
       }
     }

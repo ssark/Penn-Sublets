@@ -66,7 +66,10 @@ router.post('/login', function (req, res, next) {
 })
 
 router.get('/logout', function (req, res) {
-  req.session.user = '';
+  req.session.email = ''
+  req.session.userId = ''
+  req.session.username = ''
+  res.locals = req.session
   res.redirect('/')
 })
 module.exports = router;

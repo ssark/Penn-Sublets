@@ -1,0 +1,57 @@
+<header class="ma-header ma-header--large">
+    <!-- <! Logo > -->
+    <div class="ma-header__logo-container">
+        <a class="link-reset">
+            <div class="content">
+                <div class="ma-logo"></div>
+            </div>
+        </a>
+    </div>
+
+    <!-- <! Search box > -->
+    <div class="ma-header__search-container">
+        <form class="form-content hidden-xs">
+            <div class="ma-search-bar">
+                <i class="ma-search-bar__icon" data-feather="search"></i>
+                <label class="screen-reader-only" aria-hidden="true">Search</label>
+                <input class="ma-search-bar__input" placeholder="Search" type="text">
+            </div>
+        </form>
+    </div>
+
+    <!-- <! Navigation Container > -->
+    <div class="ma-header__nav-container">
+        <nav>
+            <ul class="ma-nav-list">
+                <% if (!email) { %>
+                <!-- <! Log in button > -->
+                <li class="ma-nav-list__item">
+                    <a href="/account/login" class="ma-nav-list__item__btn">Log in</a>
+                </li>
+                <!-- <! Sign up button > -->
+                <li class="ma-nav-list__item">
+                    <a href="/account/signup" class="ma-nav-list__item__btn">Register</a>
+                </li>
+                <% } else { %>
+                  <!-- <! Home button > -->
+                  <li class="ma-nav-list__item">
+                      <a href="/home" class="ma-nav-list__item__btn">Home</a>
+                  </li>
+                  <!-- <! Avatar button > -->
+                  <li>
+                    <a class="ma-nav-list__item__btn link-reset" href>
+                        <div class="content">
+                            <div class="ma-avatar ma-avatar--tiny ma-avatar--border-minimal round">
+                                <img width="32" height="32" src="https://cdn.dribbble.com/users/2456229/screenshots/6376729/image.png" alt="">
+                            </div>
+                        </div>
+                    </a>
+                  </li>
+                  <li class="ma-nav-list__item">
+                      <a href="/account/logout" class="ma-nav-list__item__btn">Log out</a>
+                  </li>
+                <% } %>
+            </ul>
+        </nav>
+    </div>
+</header>

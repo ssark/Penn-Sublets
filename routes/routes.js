@@ -18,7 +18,7 @@ var getHome = function(req, res) {
     if (err) {
       res.send(err)
     } else {
-      res.render('home.ejs', {user: req.session.username, allListings: listings});
+      res.render('home.ejs', {user: req.session.username, allListings: listings, session: req.session});
     }
   });
   
@@ -26,7 +26,7 @@ var getHome = function(req, res) {
 
 // Get Listing form
 var getListingForm = function(req, res) {
-  res.render('listing_form.ejs');
+  res.render('listing_form.ejs', {session: req.session});
 };
 
 // Create listing
@@ -48,15 +48,16 @@ var createListing = function(req, res) {
 
 var showListing = function(req, res) {
   var id = req.params.listingId
+  res.locals = req.session
   db.getListingById(id, function(err, listing) {
     if (err) {
       res.send(err)
     } else {
       console.log("listing owner id: " + listing.owner._id + " sessio id: " + req.session.userId)
       if (listing.owner._id == req.session.userId) {
-        res.render('listing.ejs', {listing: listing, curr: 1})
+        res.render('listing.ejs', {listing: listing, curr: 1, session: req.session})
       } else {
-        res.render('listing.ejs', {listing: listing, curr: 0})
+        res.render('listing.ejs', {listing: listing, curr: 0, session: req.session})
       }
     }
   });
@@ -68,7 +69,7 @@ var getEditListingForm = function(req, res) {
     if (err) {
       res.send(err)
     } else {
-      res.render('edit_listing.ejs', {title: listing.title, description: listing.description})
+      res.render('edit_listing.ejs', {title: listing.title, description: listing.description, session: req.session})
     }
   });
 };
