@@ -97,7 +97,6 @@ var createBooking = function(req, res) {
   var email = req.session.email
   var {listingId, dateFrom, dateTo} = req.body
 
-  console.log("**************************************", req.body)
   db.createBooking(email, listingId, dateFrom, dateTo, function(err, data) {
     if (data) {
       res.json({'msg': 'Booking successful!'});
@@ -108,7 +107,6 @@ var createBooking = function(req, res) {
 };
 
 var getBookings = function(req, res) {
-  console.log("********", req.query)
   var listingId = req.query.listingId
 
   db.getListingBookings(listingId, function(err, bookings) {
