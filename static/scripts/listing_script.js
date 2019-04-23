@@ -25,7 +25,7 @@ $(document).ready(function () {
     var htmlCode = "";
     allReviews = reviews;
     if (reviews.length == 0) {
-    	htmlCode = "<h5> No reviews yet. Add one with the form below! </h5>"
+    	htmlCode = "<h4> No reviews yet. Add one with the form below! </h4>"
     } else {
 	    reviews.forEach(function(r) {
 	  		htmlCode += "<h5 class=\"strong\">"+ r.title + "</h5>"

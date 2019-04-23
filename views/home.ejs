@@ -6,26 +6,29 @@
   </head>
   <body class="mainApp margin-reset">
     <% include ./nav %>
-
-    <% if (user) { %>
-      <p>Hi <%= user %> | 
-      <a href="/account/logout">Log out</a>
-      </p>
-    <% } else { %>
-      <a href="/account/login"> <button type="button">Log In</button> </a>
-    <br>
-      <a href="/account/signup"> <button type="button">Sign up</button> </a>
-    <% }%>
-    <% if (allListings) { %>
-      <% allListings.forEach(function(listing) { %>
-        <!-- <h2>ID: <%= listing._id %></h2> -->
-        <h2>Title: <a href="/listings/<%=listing._id%>"><%= listing.title %></a></h2>
-        <h2>Description: <%= listing.description %></h2>
-        <h2>Owner: <a href="/users/<%=listing.owner._id%>"><%= listing.owner.name %></a></h2>
-        <h2>Date posted: <%= moment(listing.date_posted).format('MMMM DD, YYYY') %></h2>
-        <br>
-      <% }); %>
-    <% } %>
+    <div class="container space-top-3">
+      <div class="row">
+        <!-- <div class="col-sm-1"></div> -->
+        <div class="col-md-9">
+          <% if (user !== undefined && user !== null && user) { %>
+            <h3 class="strong">What can we help you find, <%= username %> ?</h3>
+            <h4 class="ma-label ma-label--simple ma-label--simple--primary"> Browse hundreds of homes below!</h4>
+          <% } else { %>
+            <h3 class="strong">Welcome, what can we help you find?</h3>
+            <h4 class="ma-label ma-label--simple ma-label--simple--primary"> Log in or Register to browse hundreds of homes!</h4>
+          <% } %>
+          <hr class="ma-separator">
+            <% if (allListings) { %>
+              <% allListings.forEach(function(listing) { %>
+                <h3 class="strong"><a class="ma-label ma-label--simple ma-label--simple--secondary" href="/listings/<%=listing._id%>"><%= listing.title %></a></h3>
+                <p class="ma-p ma-p--default"><%= listing.description %></p>
+                <h5 class="ma-label ma-label--simple ma-label--simple--default">Listed by: <a class="ma-label ma-label--simple ma-label--simple--primary" href="/users/<%=listing.owner._id%>"><%= listing.owner.name %></a> on <%= moment(listing.date_posted).format('MMMM DD, YYYY') %></h5>
+                <hr class="ma-separator">
+              <% }); %>
+            <% } %>
+        </div>
+      </div>
+    </div>
   </body>
   <% include ./feature_script %>
 </html>
