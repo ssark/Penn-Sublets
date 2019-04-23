@@ -22,11 +22,11 @@
     <% }%>
     <% if (allListings) { %>
       <% allListings.forEach(function(listing) { %>
-        <h2>ID: <%= listing._id %></h2>
-        <h2>Title: <%= listing.title %></h2>
+        <!-- <h2>ID: <%= listing._id %></h2> -->
+        <h2>Title: <a href="/listings/<%=listing._id%>"><%= listing.title %></a></h2>
         <h2>Description: <%= listing.description %></h2>
-        <h2>Owner: <%= listing.owner %></h2>
-        <h2>Date posted: <%= listing.date_posted %></h2>
+        <h2>Owner: <a href="/users/<%=listing.owner._id%>"><%= listing.owner.name %></a></h2>
+        <h2>Date posted: <%= moment(listing.date_posted).format('MMMM DD, YYYY') %></h2>
         <br>
       <% }); %>
     <% } %>

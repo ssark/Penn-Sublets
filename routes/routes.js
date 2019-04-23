@@ -14,11 +14,11 @@ var getIndex = function(req, res) {
 };
 
 var getHome = function(req, res) {
-  db.getUserListings(req.session.userId, function(err, user) {
+  db.getAllListings(function(err, listings) {
     if (err) {
       res.send(err)
     } else {
-      res.render('home.ejs', {user: user.name, allListings: user.listings});
+      res.render('home.ejs', {user: req.session.username, allListings: listings});
     }
   });
   
@@ -40,7 +40,7 @@ var createListing = function(req, res) {
       // TODO: ERROR CODE
       res.send(err)
     } else {
-      console.log('in create listing')
+      // console.log('in create listing')
       res.redirect('/listings/'+listingId)
     }
   });
@@ -52,7 +52,12 @@ var showListing = function(req, res) {
     if (err) {
       res.send(err)
     } else {
-      res.render('listing.ejs', listing)
+      console.log("listing owner id: " + listing.owner._id + " sessio id: " + req.session.userId)
+      if (listing.owner._id == req.session.userId) {
+        res.render('listing.ejs', {listing: listing, curr: 1})
+      } else {
+        res.render('listing.ejs', {listing: listing, curr: 0})
+      }
     }
   });
 };
@@ -145,7 +150,6 @@ var getReviews = function(req, res) {
 var getProfile = function(req, res) {
   var myId = req.session.userId
   var userId = req.params.userId
-  console.log('******* req query' + req.params.userId)
 
   db.getUserListings(userId, function(lErr, user) {
     if (lErr) {

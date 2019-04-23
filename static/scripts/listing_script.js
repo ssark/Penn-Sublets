@@ -25,16 +25,17 @@ $(document).ready(function () {
     var htmlCode = "";
     allReviews = reviews;
     if (reviews.length == 0) {
-    	htmlCode = "<h5> No reviews yet. Add one with the form above </h5>"
+    	htmlCode = "<h5> No reviews yet. Add one with the form below! </h5>"
     } else {
 	    reviews.forEach(function(r) {
 	  		htmlCode += "<h5>"+ r.title + "</h5>"
-	  		htmlCode += "<p>"+ r.text + "</p>"
-	  		htmlCode += "<br>"
+	  		htmlCode += "<p class=\"ma-p ma-p--small\">"+ r.text + "</p>"
+	  		htmlCode += "<div class=\"ma-label ma-label--simple ma-label--simple--small\"> <a href=\"/users/" + r.user._id + "\">" + r.user.name + "</a> - "
+	  		htmlCode += moment(r.date_posted).format('MMMM D, YYYY') + "</div>"
+	  		htmlCode += "<hr class=\"ma-separator\">"
 	  	})
-	  	console.log(htmlCode)
-	  	$("#reviews-div").append(htmlCode);
     }
+    $("#reviews-div").append(htmlCode);
   	
   });
 
@@ -94,17 +95,16 @@ $(document).ready(function () {
 			.done(function(data) {
 				console.log(data)
 				htmlCode = ""
-				htmlCode += "<h5>"+ data.title + "</h5>"
-	  		htmlCode += "<p>"+ data.text + "</p>"
-	  		htmlCode += "<p> By: "+ data.user.name + "</p>"
-	  		htmlCode += "<br>"
-	  		if (allReviews.length == 0) {
-	  			$("#reviews-div").html(htmlCode);
-	  		} else {
-	  			$("#reviews-div").prepend(htmlCode);
-	  		}
-	  		
-				
+			  	htmlCode += "<h5>"+ data.title + "</h5>"
+		  		htmlCode += "<p class=\"ma-p ma-p--small\">"+ data.text + "</p>"
+		  		htmlCode += "<div class=\"ma-label ma-label--simple ma-label--simple--small\"> <a href=\"/users/" + data.user._id + "\">" + data.user.name + "</a> - "
+		  		htmlCode += moment(data.date_posted).format('MMMM D, YYYY') + "</div>"
+		  		htmlCode += "<hr class=\"ma-separator\">"
+		  		if (allReviews.length == 0) {
+		  			$("#reviews-div").html(htmlCode);
+		  		} else {
+		  			$("#reviews-div").append(htmlCode);
+		  		}
 			})
 			.fail(function(data) {
 				alert("Error: " + data.responseJSON.msg)
@@ -112,10 +112,11 @@ $(document).ready(function () {
 	});
 
 	$('#booking-form-date').daterangepicker({
+	"showDropdowns": true,
     "minYear": 2019,
-    "autoApply": true,
     "minDate": moment(),
     "opens": "center",
+    "applyButtonClasses": "ma-btn ma-btn--small ma-btn--primary",
     "isInvalidDate": function(date) {
     	for (var i = 0; i < allRanges.length; i++) {
     		var curr = allRanges[i]
@@ -131,5 +132,6 @@ $(document).ready(function () {
 	}, function(start, end, label) {
 	  startDate = start.format('YYYY-MM-DD')
 	  endDate = end.format('YYYY-MM-DD')
+	  $('#booking-form-date').addClass('ma-input--invalid')
 	});
 })

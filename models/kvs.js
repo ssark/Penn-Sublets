@@ -31,13 +31,13 @@ var createListing = function(email, title, description, callback) {
 
 // callback(err, data)
 var getListingById = function(id, callback) {
-  Listing.findById(id, function(err, listing) {
+  Listing.findById(id).populate('owner').exec(function(err, listing) {
     if (err) {
       callback(err, null);
     } else {
       callback(null, listing);
     }
-  })
+  });
 };
 
 // callback(err)
@@ -190,7 +190,7 @@ var createReview = function(email, listingId, title, text, callback) {
 };
 
 var getListingReviews = function(listingId, callback) {
-  Review.find({listing: listingId}, function(err, reviews) {
+  Review.find({listing: listingId}).populate('user').exec(function(err, reviews) {
     if (err) {
       callback(err, null)
     } else {
@@ -209,6 +209,17 @@ var getUserProfile = function(userId, callback) {
   })
 }
 
+// callback (err, listings)
+var getAllListings = function(callback) {
+  Listing.find({}).populate('owner').exec(function(err, data) {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, data)
+    }
+  });
+}
+
 
 var db = {
   createListing: createListing,
@@ -221,7 +232,8 @@ var db = {
   getListingBookings: getListingBookings,
   getListingReviews: getListingReviews,
   getUserBookings: getUserBookings,
-  getUserProfile: getUserProfile
+  getUserProfile: getUserProfile,
+  getAllListings: getAllListings
 
 
 }

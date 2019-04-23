@@ -1,45 +1,79 @@
 <html>
   <head>
-    <title><%= title %></title>
+    <title><%= listing.title %></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
     <!-- <link rel="stylesheet" href="/theme/app.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <script src="https://use.fontawesome.com/99e7a6e2c6.js"></script>
+    <script type="text/javascript" src="/build/js/feather.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/styles/styles.css"/>
     <script src="/static/scripts/listing_script.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   </head>
   <body>
-    <input id="listing_id" type="hidden" value="<%= _id %>">
-    <h1> Listing show page</h1>
-    <h2>Title: <%= title %></h2>
-    <h2>Description: <%= description %></h2>
-    <h2>Owner: <%= owner %></h2>
-    <h2>Date posted: <%= date_posted %></h2>
-    <button id='delete-listing'>Delete Listing</button>
+    <input id="listing_id" type="hidden" value="<%= listing._id %>">
+    <div class="container">
+        <div class="col-sm-8">
+            <!-- Avatar -->
+            <div class="pull-right">
+                <div class="ma-avatar ma-avatar--small ma-avatar--border-minimal round">
+                    <a href="/users/<%=listing.owner._id%>"><img width="70" height="70" src="https://cdn.dribbble.com/users/2456229/screenshots/6376729/image.png" alt=""></a>
+                </div>
+                <div class="ma-label ma-label--simple ma-label--simple--large"><%= listing.owner.name %></div>
+            </div>
 
-    <div class="col-md-3">
-      <h2>Book this listing</h2>
-<!--         From: <input type="date" id="date-from"> <br/>
-        To: <input type="date" id="date-to"> <br/> -->
-        <input type="text" id="booking-form-date" class="form-control pull-right">
-        <button id="book-listing">Book this</button>
+            <!-- title + date -->
+            <h2 class="strong"><%= listing.title %></h2>
+            <div class="ma-label ma-label--simple ma-label--simple--small"><%= moment(listing.date_posted).format('MMMM D, YYYY') %></div>
+            <br>
+            <br>
+
+            <!-- Description (NEED SPACE JUST ABOVE) -->
+            <p class="ma-p ma-p--large"><%= listing.description %><p>
+        
+            <hr class="ma-separator">
+
+            
+            <div id='reviews-div'>
+            </div>
+
+            <div class="ma-box">
+                <div class="ma-box__content">
+                  <h4>Leave a Review</h4>
+                    <input class="ma-input ma-input--small" type="text" id="review-title" placeholder="Summarize Your Review Here"> <br/>
+                    <input class="ma-input ma-input--small" type="text" placeholder="Write your review here" id="review-text"> <br/>
+                    <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id="post-review">Post Review</button>
+                </div>
+            </div>
+
+            <% if (curr == 1) { %>
+                <hr class="ma-separator">
+                <!-- delete listing button -->
+                <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id='delete-listing'>Delete Listing</button>
+            <% } %>
+        </div>
+
+        <div class="col-sm-4 ma-box">
+            <div class="ma-box__title">Book this listing</div>
+                <div class="ma-box__content">
+                    <div class="ma-form ma-form--basic">
+                        <div class="form-group">
+                            <label for="input4">Pick your dates:</label>
+                            <input type="text" id="booking-form-date" class="ma-input ma-input--default">
+                            <p class="ma-p ma-p--small font-weight-normal space-top-1">
+                                These will be the dates that you will be booked for
+                            </p>
+                            <button class="ma-btn ma-btn--small ma-btn--primary ma-btn--block" id="book-listing">Book this</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-    <div class="col-md-3">
-      <h2>Write review</h2>
-        Title: <input type="text" id="review-title"> <br/>
-        <input type="text" placeholder="Write review here" id="review-text"> <br/>
-        <button id="post-review">Post</button>
-        <button class="ma-btn ma-btn--default ma-btn--primary">Start Now</button>
-    </div>
-
-    <div class="col-md-3" id='reviews-div'>
-    </div>
-
   </body>
 </html>
 

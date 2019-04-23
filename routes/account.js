@@ -25,6 +25,7 @@ router.post('/signup', function (req, res, next) {
       // Render the home page
       req.session.email = email
       req.session.user_id = user._id
+      req.session.username = name
       res.redirect('/home');
     } else {
       // Invalid signup
@@ -57,6 +58,7 @@ router.post('/login', function (req, res, next) {
       // successful
       req.session.email = email
       req.session.userId = verified._id
+      req.session.username = verified.name
       console.log(req.session)
       res.redirect('/home');
     }
