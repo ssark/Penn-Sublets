@@ -9,6 +9,7 @@ var validCodes = require('../public/validCodes')
 
 router.get('/signup', function (req, res, next) {
   // check for invalid entries to form
+  res.locals = req.session
   if (req.query.valid == validCodes.userExists.num) {
     res.render('signup.ejs', {message: validCodes.userExists.msg});
   } else if (req.query.valid == validCodes.serverError.num) {
@@ -20,13 +21,14 @@ router.get('/signup', function (req, res, next) {
 
 router.post('/signup', function (req, res, next) {
   var {name, email, password} = req.body;
-  User.addUser(name, email, password, function(errorNum, errormsg) {
-    if (errorNum === null && errormsg !== null) {
+  User.addUser(name, email, password, function(errorNum, user) {
+    if (errorNum === null && res !== null) {
       // Render the home page
       req.session.email = email
       req.session.user_id = user._id
       req.session.username = name
-      res.redirect('/home');
+      res.locals = req.session
+      res.redirect('/');
     } else {
       // Invalid signup
       res.redirect('/account/signup?valid='+errorNum);
@@ -36,6 +38,7 @@ router.post('/signup', function (req, res, next) {
 
 router.get('/login', function (req, res) {
   // check for invalid entries to login form
+  res.locals = req.session
   if (req.query.valid == validCodes.serverError.num) {
     res.render('login.ejs', {message: validCodes.serverError.msg});
   } else if (req.query.valid == validCodes.accountNotExist.num) {
@@ -59,8 +62,8 @@ router.post('/login', function (req, res, next) {
       req.session.email = email
       req.session.userId = verified._id
       req.session.username = verified.name
-      console.log(req.session)
-      res.redirect('/home');
+      res.locals = req.session
+      res.redirect('/');
     }
   });
 })

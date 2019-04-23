@@ -12,6 +12,7 @@ const userSchema = new Schema({
 // callback(errorNum, errormsg)
 userSchema.statics.addUser = function(name, email, password, callback) {
   console.log('in adduser')
+  console.log(name, email, password)
   var newUser = new this({ name: name, email: email, password: password, listings: []});
   this.findOne({ email: email}, function(findErr, user) {
     if (findErr) {
@@ -23,7 +24,8 @@ userSchema.statics.addUser = function(name, email, password, callback) {
         if (err) {
           callback(validCodes.serverError.num, err);
         } else {
-          callback(null, user); // success saving user
+          console.log("succes ssavind user: " + result)
+          callback(null, result); // success saving user
         }
       });
     }

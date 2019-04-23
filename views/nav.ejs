@@ -23,7 +23,7 @@
     <div class="ma-header__nav-container">
         <nav>
             <ul class="ma-nav-list">
-                <% if (!email) { %>
+                <% if (email == undefined || !email) { %>
                 <!-- <! Log in button > -->
                 <li class="ma-nav-list__item">
                     <a href="/account/login" class="ma-nav-list__item__btn">Log in</a>
@@ -33,10 +33,15 @@
                     <a href="/account/signup" class="ma-nav-list__item__btn">Register</a>
                 </li>
                 <% } else { %>
+                  <li class="ma-nav-list__item">
+                      <a href="/newListing" class="ma-nav-list__item__btn">New Listing</a>
+                  </li>
+
                   <!-- <! Home button > -->
                   <li class="ma-nav-list__item">
-                      <a href="/home" class="ma-nav-list__item__btn">Home</a>
+                      <a href="/" class="ma-nav-list__item__btn">Home</a>
                   </li>
+
                   <!-- <! Avatar button > -->
                   <li>
                     <a class="ma-nav-list__item__btn link-reset" href>

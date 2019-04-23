@@ -10,7 +10,7 @@ $(document).ready(function () {
 		type: 'DELETE',
 		success: function(data) {
 			if (data === 'success') { // redirect back to home
-			 window.location.href = '../home';
+			 window.location.href = '../';
 			} else {
 			console.log(data)
 			}

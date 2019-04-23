@@ -30,8 +30,7 @@ app.use(cookieSession({
 // });
 
 // Misc
-app.get('/', routes.getIndex);
-app.get('/home', routes.getHome);
+app.get('/', routes.getHome);
 
 app.get('/users/:userId', routes.getProfile);
 
