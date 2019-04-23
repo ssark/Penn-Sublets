@@ -17,50 +17,53 @@
   <body>
     <input id="listing_id" type="hidden" value="<%= listing._id %>">
     <div class="container">
-        <div class="col-sm-8">
-            <!-- Avatar -->
-            <div class="pull-right">
-                <div class="ma-avatar ma-avatar--small ma-avatar--border-minimal round">
-                    <a href="/users/<%=listing.owner._id%>"><img width="70" height="70" src="https://cdn.dribbble.com/users/2456229/screenshots/6376729/image.png" alt=""></a>
+        <div class="row">
+            <div class="col-sm-8">
+                <!-- Avatar -->
+                <div class="pull-right">
+                    <div class="ma-avatar ma-avatar--small ma-avatar--border-minimal round">
+                        <a href="/users/<%=listing.owner._id%>"><img width="70" height="70" src="https://cdn.dribbble.com/users/2456229/screenshots/6376729/image.png" alt=""></a>
+                    </div>
+                    <div class="ma-label ma-label--simple ma-label--simple--large"><%= listing.owner.name %></div>
                 </div>
-                <div class="ma-label ma-label--simple ma-label--simple--large"><%= listing.owner.name %></div>
-            </div>
 
-            <!-- title + date -->
-            <h2 class="strong"><%= listing.title %></h2>
-            <div class="ma-label ma-label--simple ma-label--simple--small"><%= moment(listing.date_posted).format('MMMM D, YYYY') %></div>
-            <br>
-            <br>
+                <!-- title + date -->
+                <h2 class="strong"><%= listing.title %></h2>
+                <div class="ma-label ma-label--simple ma-label--simple--small"><%= moment(listing.date_posted).format('MMMM D, YYYY') %></div>
+                <br>
+                <br>
 
-            <!-- Description (NEED SPACE JUST ABOVE) -->
-            <p class="ma-p ma-p--large"><%= listing.description %><p>
-        
-            <hr class="ma-separator">
-
+                <!-- Description (NEED SPACE JUST ABOVE) -->
+                <p class="ma-p ma-p--large"><%= listing.description %></p>
             
-            <div id='reviews-div'>
-            </div>
-
-            <div class="ma-box">
-                <div class="ma-box__content">
-                  <h4>Leave a Review</h4>
-                    <input class="ma-input ma-input--small" type="text" id="review-title" placeholder="Summarize Your Review Here"> <br/>
-                    <input class="ma-input ma-input--small" type="text" placeholder="Write your review here" id="review-text"> <br/>
-                    <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id="post-review">Post Review</button>
-                </div>
-            </div>
-
-            <% if (curr == 1) { %>
                 <hr class="ma-separator">
-                <!-- delete listing button -->
-                <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id='delete-listing'>Delete Listing</button>
-            <% } %>
-        </div>
 
-        <div class="col-sm-4 ma-box">
-            <div class="ma-box__title">Book this listing</div>
-                <div class="ma-box__content">
-                    <div class="ma-form ma-form--basic">
+                
+                <div id='reviews-div'>
+                </div>
+
+                <div>
+                    <div>
+                      <h3>Leave a Review</h3>
+                      <br>
+                        <input class="ma-input ma-input--small" type="text" id="review-title" placeholder="Summarize Your Review Here"> <br/>
+                        <input class="ma-input ma-input--small" type="text" placeholder="Write your review here" id="review-text"> <br/>
+                        <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id="post-review">Post Review</button>
+                    </div>
+                </div>
+
+                <% if (curr == 1) { %>
+                    <hr class="ma-separator">
+                    <!-- delete listing button -->
+                    <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id='delete-listing'>Delete Listing</button>
+                <% } %>
+            </div>
+
+            <div class="col-sm-4 offset-sm-6 space-top-3">
+                <div class="ma-box">
+                    <div class="ma-box__title">Book this listing</div>
+                    <div class="ma-box__content">
+                        <!-- <div class="ma-form ma-form--basic"> -->
                         <div class="form-group">
                             <label for="input4">Pick your dates:</label>
                             <input type="text" id="booking-form-date" class="ma-input ma-input--default">

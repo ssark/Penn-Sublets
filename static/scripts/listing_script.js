@@ -105,6 +105,8 @@ $(document).ready(function () {
 		  		} else {
 		  			$("#reviews-div").append(htmlCode);
 		  		}
+		  		$('#review-title').val('')
+		  		$('#review-text').val('')
 			})
 			.fail(function(data) {
 				alert("Error: " + data.responseJSON.msg)
