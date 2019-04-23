@@ -1,16 +1,12 @@
 <html>
   <head>
-    <script src="/static/scripts/lib/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/static/styles/styles.css"/>
-    <script type="text/javascript">
-      // var loadHome = function () {
-
-      // };
-
-      // window.onload = loadHome;
-    </script>
+    <title>Home</title>
+    <% include ./head %>
+    <script src="/static/scripts/home_script.js"></script>
   </head>
-  <body>
+  <body class="mainApp margin-reset">
+    <% include ./nav %>
+
     <% if (user) { %>
       <p>Hi <%= user %> | 
       <a href="/account/logout">Log out</a>
@@ -31,4 +27,5 @@
       <% }); %>
     <% } %>
   </body>
+  <% include ./feature_script %>
 </html>

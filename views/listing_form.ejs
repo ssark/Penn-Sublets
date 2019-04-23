@@ -1,15 +1,30 @@
 <html>
   <head>
-    <title>New Listing page</title>
+    <title>New Listing</title>
+    <% include ./head %>
   </head>
-  <body>
-    <h1>New Listing</h1>
-    <form method="POST">
-      Title: <br/>
-      <input type="text" name="title" required/> <br/>
-      Description: <br/>
-      <input type="text" name="description" required/> <br/>
-      <button type="submit">Submit</button>
-    </form>
+  <body class="mainApp margin-reset">
+    <% include ./nav %>
+
+    <div>
+        <div class="ma-box__content">
+          <h1>Become a host</h1>
+            <form class="ma-form ma-form--basic" method="POST">
+              <div class="form-group">
+                <label for="title">Listing Title</label>
+                <input type="text" placeholder="Give your listing an attractive title" class="ma-input ma-input--default" name="title" required/>
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea  type="text" placeholder="Write a a few words about your listing e.g. Beautiful, sunny beach house in gorgeous Malibu" class="ma-input ma-input--default" name="description" required></textarea>
+              </div>
+
+              <button class="ma-btn ma-btn--small ma-btn--primary ma-btn--block" type="submit">List my home!</button>
+            </form>
+        <!-- </div> -->
+      <!-- </div> -->
+    </div>
   </body>
+  <% include ./feature_script %>
 </html>

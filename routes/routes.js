@@ -14,6 +14,7 @@ var getIndex = function(req, res) {
 };
 
 var getHome = function(req, res) {
+  res.locals = req.session
   db.getAllListings(function(err, listings) {
     if (err) {
       res.send(err)
@@ -26,16 +27,19 @@ var getHome = function(req, res) {
 
 // Get Listing form
 var getListingForm = function(req, res) {
+  res.locals = req.session
   res.render('listing_form.ejs', {session: req.session});
 };
 
 // Create listing
 var createListing = function(req, res) {
+  res.locals = req.session
   var email = req.session.email
   var {title, description} = req.body
 
   // trigger backend
   db.createListing(email, title, description, function(err, listingId) {
+    res.locals = req.session
     if (err && listingId === null) {
       // TODO: ERROR CODE
       res.send(err)
@@ -47,6 +51,7 @@ var createListing = function(req, res) {
 };
 
 var showListing = function(req, res) {
+  res.locals = req.session
   var id = req.params.listingId
   res.locals = req.session
   db.getListingById(id, function(err, listing) {
@@ -64,6 +69,7 @@ var showListing = function(req, res) {
 };
 
 var getEditListingForm = function(req, res) {
+  res.locals = req.session
   var id = req.params.listingId
   db.getListingById(id, function(err, listing) {
     if (err) {
@@ -75,6 +81,7 @@ var getEditListingForm = function(req, res) {
 };
 
 var updateListing = function(req, res) {
+  res.locals = req.session
   var id = req.params.listingId
   var {title, description} = req.body
   // update on backend
@@ -88,6 +95,7 @@ var updateListing = function(req, res) {
 };
 
 var deleteListing = function(req, res) {
+  res.locals = req.session
   var id =  req.params.listingId
   db.deleteListing(id, function(err, data) {
     if (err) {
@@ -99,6 +107,7 @@ var deleteListing = function(req, res) {
 };
 
 var createBooking = function(req, res) {
+  res.locals = req.session
   var email = req.session.email
   var {listingId, dateFrom, dateTo} = req.body
 
@@ -112,6 +121,7 @@ var createBooking = function(req, res) {
 };
 
 var getBookings = function(req, res) {
+  res.locals = req.session
   var listingId = req.query.listingId
 
   db.getListingBookings(listingId, function(err, bookings) {
@@ -124,6 +134,7 @@ var getBookings = function(req, res) {
 }
 
 var createReview = function(req, res) {
+  res.locals = req.session
   var email = req.session.email
   var {listingId, title, text} = req.body
 
@@ -137,6 +148,7 @@ var createReview = function(req, res) {
 };
 
 var getReviews = function(req, res) {
+  res.locals = req.session
   var listingId = req.query.listingId
 
   db.getListingReviews(listingId, function(err, reviews) {
@@ -149,6 +161,7 @@ var getReviews = function(req, res) {
 };
 
 var getProfile = function(req, res) {
+  res.locals = req.session
   var myId = req.session.userId
   var userId = req.params.userId
 
