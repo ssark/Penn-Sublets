@@ -18,8 +18,8 @@
     <input id="listing_id" type="hidden" value="<%= listing._id %>">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-1"></div>
-            <div class="col-md-6">
+            <div class="col-sm-1"></div>
+            <div class="col-md-6 col-sm-3">
                 <!-- Avatar -->
                 <div class="pull-right">
                     <div class="row">
@@ -52,7 +52,8 @@
                       <h3>Leave a Review</h3>
                       <br>
                         <input class="ma-input ma-input--small" type="text" id="review-title" placeholder="Summarize Your Review Here"> <br/>
-                        <input class="ma-input ma-input--small" type="text" placeholder="Write your review here" id="review-text"> <br/>
+                        <textarea class="ma-input ma-input--small" type="text" placeholder="Write your review here" id="review-text"></textarea>
+                        <br/>
                         <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id="post-review">Post Review</button>
                     </div>
                 </div>
@@ -63,10 +64,10 @@
                     <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id='delete-listing'>Delete Listing</button>
                 <% } %>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
             <!-- leave this blank-->
             </div>
-            <div class="col-md-3 space-top-3">
+            <div class="col-md-4 space-top-3">
                 <div class="ma-box">
                     <div class="ma-box__title">Book this listing</div>
                     <div class="ma-box__content">
