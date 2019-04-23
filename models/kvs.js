@@ -80,6 +80,25 @@ var getUserListings = function(email, callback) {
   })
 };
 
+// takes user instance
+var getUserBookings = function(email, callback) {
+  User.findOne({ email: email }, function(uerr, user) {
+    if (uerr) {
+      callback(uerr, null);
+    } else {
+      // callback(null, user.listings);
+      console.log(user)
+      Booking.find({booker: user}).populate('listing').exec(function(err, bookings) {
+        if (err) {
+          callback(err, null)
+        } else {
+          callback(null, bookings)
+        }
+      });
+    }
+  })
+}
+
 // callback(err, bookings)
 var getListingBookings = function(listingId, callback) {
   Booking.find({listing: listingId}, function(err, bookings) {
@@ -141,7 +160,7 @@ var createBooking = function(email, listingId, date_from, date_to, callback) {
 
 // callback(err, data)
 var createReview = function(email, listingId, title, text, callback) {
-  console.log('in db createReview')
+  console.log('in db createReview ' +  email)
   User.findOne({email: email}, function(userErr, user) { 
     if (userErr) {
       callback(userErr, null);
@@ -160,6 +179,7 @@ var createReview = function(email, listingId, title, text, callback) {
               callback(reviewErr, null)
             } else {
               console.log('success review')
+              console.log("******* the review", review)
               callback(null, review)
             }
           })
@@ -179,6 +199,7 @@ var getListingReviews = function(listingId, callback) {
   });
 };
 
+
 var db = {
   createListing: createListing,
   getListingById: getListingById,
@@ -188,7 +209,8 @@ var db = {
   createBooking: createBooking,
   createReview: createReview,
   getListingBookings: getListingBookings,
-  getListingReviews: getListingReviews
+  getListingReviews: getListingReviews,
+  getUserBookings: getUserBookings
 
 
 }

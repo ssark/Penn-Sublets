@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>My Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <!-- <link rel="stylesheet" href="/theme/app.css"> -->
+    <link rel="stylesheet" type="text/css" href="/static/styles/styles.css"/>
+    <script src="/static/scripts/profile_script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  </head>
+  <body>
+    <h2>My Profile</h2>
+
+    <h3>My Listings</h3>
+    <ul>
+      <% if (listings) { %>
+        <% if (listings.length == 0) { %>
+          <h4>No listings yet!</h4>
+        <% } else { %>
+          <% for(var i = 0; i < listings.length; i++) { %>
+            <% var curr = listings[i] %>
+            <li>
+            <h4>Title: <%= curr.title %></h4>
+            <h4>Description: <%= curr.description %></h4>
+            <h4>Date posted: <%= curr.date_posted %></h4>
+          </li>
+          <% } %>
+        <% } %>
+      <% } %>
+    </ul>
+
+    <h3>My Bookings</h3>
+    <ul>
+      <% if (bookings) { %>
+        <% if (bookings.length == 0) { %>
+          <h4>No bookings yet!</h4>
+        <% } else { %>
+          <% for(var i = 0; i < bookings.length; i++) { %>
+            <% var curr = bookings[i] %>
+            <li>
+            <h4>Listing: <%= curr.listing.title %></h4>
+            <h4>Dates: <%= moment(curr.date_from).format('DD-MM-YYY') %> to  <%= moment(curr.date_to).format('DD-MM-YYY') %></h4>
+          </li>
+          <% } %>
+        <% } %>
+      <% } %>
+    </ul>
+
+  </body>
+</html>
+
+

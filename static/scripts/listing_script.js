@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	var listingId = $('#listing_id').val()
-	console.log("** ins cript", listingId)
+
 	$("#delete-listing").click(function() {
 		console.log('*****')
 		var currId = $('#listing_id').val()
@@ -18,6 +18,26 @@ $(document).ready(function () {
 		});
 	});
 
+	var allReviews = []
+
+	$.getJSON('../getReviews', {listingId: listingId}, function(reviews) {
+		console.log(reviews)
+    var htmlCode = "";
+    allReviews = reviews;
+    if (reviews.length == 0) {
+    	htmlCode = "<h5> No reviews yet. Add one with the form above </h5>"
+    } else {
+	    reviews.forEach(function(r) {
+	  		htmlCode += "<h5>"+ r.title + "</h5>"
+	  		htmlCode += "<p>"+ r.text + "</p>"
+	  		htmlCode += "<br>"
+	  	})
+	  	console.log(htmlCode)
+	  	$("#reviews-div").append(htmlCode);
+    }
+  	
+  });
+
 	var allRanges = []
   // get all booking dates
   $.getJSON('../getBookings', {listingId: listingId}, function(bookings) {
@@ -34,7 +54,6 @@ $(document).ready(function () {
 	$("#book-listing").click(function() {
 		var listingId = $('#listing_id').val()
 
-		console.log("start date", startDate, "end date", endDate)
 		if (startDate == null || endDate == null) {
 		alert('No dates selected yet')
 		} else {
@@ -74,7 +93,18 @@ $(document).ready(function () {
 			})
 			.done(function(data) {
 				console.log(data)
-				// posting logic here
+				htmlCode = ""
+				htmlCode += "<h5>"+ data.title + "</h5>"
+	  		htmlCode += "<p>"+ data.text + "</p>"
+	  		htmlCode += "<p> By: "+ data.user.name + "</p>"
+	  		htmlCode += "<br>"
+	  		if (allReviews.length == 0) {
+	  			$("#reviews-div").html(htmlCode);
+	  		} else {
+	  			$("#reviews-div").prepend(htmlCode);
+	  		}
+	  		
+				
 			})
 			.fail(function(data) {
 				alert("Error: " + data.responseJSON.msg)
@@ -101,6 +131,5 @@ $(document).ready(function () {
 	}, function(start, end, label) {
 	  startDate = start.format('YYYY-MM-DD')
 	  endDate = end.format('YYYY-MM-DD')
-
 	});
 })

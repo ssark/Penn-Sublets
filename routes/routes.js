@@ -131,6 +131,37 @@ var createReview = function(req, res) {
   });
 };
 
+var getReviews = function(req, res) {
+  var listingId = req.query.listingId
+
+  db.getListingReviews(listingId, function(err, reviews) {
+    if (err) {
+      res.status(500).json({'msg': err});
+    } else {
+      res.json(reviews);
+    }
+  })
+};
+
+var getMyProfile = function(req, res) {
+  var myEmail = req.session.email
+
+  db.getUserListings(myEmail, function(lErr, listings) {
+    if (lErr) {
+      res.status(500).send(lErr)
+    } else {
+      db.getUserBookings(myEmail, function(err, bookings) {
+        if (err) {
+          res.status(500).send(lErr)
+        } else {
+          console.log(bookings)
+          res.render('profile.ejs', {bookings: bookings, listings: listings});
+        }
+      });
+    }
+  });
+}
+
 var routes = {
   getIndex: getIndex,
   getHome: getHome,
@@ -142,7 +173,9 @@ var routes = {
   deleteListing: deleteListing,
   createBooking: createBooking,
   createReview: createReview,
-  getBookings: getBookings
+  getBookings: getBookings,
+  getReviews: getReviews,
+  getMyProfile: getMyProfile
 };
 
 
