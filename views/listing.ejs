@@ -1,56 +1,15 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
-    <script type="text/javascript">
-      var loadListing = function() {
-        $("#delete-listing").click(function() {
-          console.log('*****')
-          var currId = $('#listing_id').val()
-          var delUrl = '/listings/delete/' + currId
-          $.ajax({
-            url: delUrl,
-            type: 'DELETE',
-            success: function(data) {
-              if (data === 'success') { // redirect back to home
-                 window.location.href = '../home';
-              } else {
-                console.log(data)
-              }
-            }
-          });
-        });
-
-        $("#book-listing").click(function() {
-          var dateFrom = $('#date-from').val()
-          var dateTo = $('#date-to').val()
-          var listingId = $('#listing_id').val()
-
-          if (moment(dateTo).isBefore(dateFrom)) {
-            alert('Invalid dates! Start date is before end date.')
-          } else {
-            alert('going to post')
-            $.ajax({
-              type: "POST",
-              url: '../createBooking',
-              data: {
-                listingId: listingId,
-                dateFrom: dateFrom,
-                dateTo: dateTo
-              },
-              success: function(data) {
-                alert('Booking successful!');
-              },
-              error: function(data) {
-                alert('error')
-              }
-            });
-          }
-        });
-      }
-      window.onload = loadListing;
-    </script>
+    <!-- <link rel="stylesheet" href="/theme/app.css"> -->
+    <link rel="stylesheet" type="text/css" href="/static/styles/styles.css"/>
+    <script src="/static/scripts/listing_script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   </head>
   <body>
     <input id="listing_id" type="hidden" value="<%= _id %>">
@@ -63,11 +22,19 @@
 
     <div class="col-md-3">
       <h2>Book this listing</h2>
-      <form>
-        From: <input type="date" id="date-from"> <br/>
-        To: <input type="date" id="date-to"> <br/>
+<!--         From: <input type="date" id="date-from"> <br/>
+        To: <input type="date" id="date-to"> <br/> -->
+        <input type="text" id="booking-form-date" class="form-control pull-right">
         <button id="book-listing">Book this</button>
-      </form>
+    </div>
+
+
+    <div class="col-md-3">
+      <h2>Write review</h2>
+        Title: <input type="text" id="review-title"> <br/>
+        <input type="text" placeholder="Write review here" id="review-text"> <br/>
+        <button id="post-review">Post</button>
+        <button class="ma-btn ma-btn--default ma-btn--primary">Start Now</button>
     </div>
   </body>
 </html>

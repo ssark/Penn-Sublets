@@ -28,6 +28,11 @@ app.use(cookieSession({
 app.get('/', routes.getIndex);
 app.get('/home', routes.getHome);
 
+
+// Booking pages
+app.post('/createBooking', routes.createBooking);
+app.post('/createReview', routes.createReview);
+
 // Listing pages
 app.get('/newListing', routes.getListingForm);
 app.post('/newListing', routes.createListing);
@@ -40,8 +45,6 @@ app.post('/listings/edit/:listingId', routes.updateListing);
 app.delete('/listings/delete/:listingId', routes.deleteListing);
 
 
-// Booking pages
-app.post('/createBooking', routes.createBooking);
 
 app.use('/account', accountRouter)
 

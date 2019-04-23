@@ -121,7 +121,7 @@ var createBooking = function(email, listingId, date_from, date_to, callback) {
           });
 
           if (isOverlap) {
-            callback('Already booked for those dates!', null) // Already booked for those dates
+            callback('Those dates are not available. Try again!', null) // Already booked for those dates
           } else { // Create booking
             var newBooking = new Booking({ booker: user, listing: listingId, date_from: date_from, date_to: date_to});
             newBooking.save(function(bookingErr, booking) {

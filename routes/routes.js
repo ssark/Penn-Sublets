@@ -93,27 +93,32 @@ var deleteListing = function(req, res) {
   });
 };
 
-// var getBookingForm = function(req, res) {
-// // get listing for whom to book for in the params, render on the page
-
-// };
-
 var createBooking = function(req, res) {
-  console.log('***************** in createBooking')
   var email = req.session.email
   var {listingId, dateFrom, dateTo} = req.body
 
+  console.log("**************************************", req.body)
   db.createBooking(email, listingId, dateFrom, dateTo, function(err, data) {
     if (data) {
-      console.log('***** SUCCESS')
-      res.status(200).send({'msg': 'success'});
+      res.json({'msg': 'Booking successful!'});
     } else {
-      console.log('***** gonna send error')
-      res.status(500).send({'msg': 'error'});
+      res.status(500).json({'msg': err});
     }
   });
 };
 
+var createReview = function(req, res) {
+  var email = req.session.email
+  var {listingId, title, text} = req.body
+
+  db.createReview(email, listingId, title, text, function(err, data) {
+    if (data) {
+      res.json(data);
+    } else {
+      res.status(500).json({'msg': err});
+    }
+  });
+};
 
 var routes = {
   getIndex: getIndex,
@@ -124,7 +129,8 @@ var routes = {
   getEditListingForm: getEditListingForm,
   updateListing: updateListing,
   deleteListing: deleteListing,
-  createBooking: createBooking
+  createBooking: createBooking,
+  createReview: createReview
 };
 
 
