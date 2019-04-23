@@ -17,14 +17,19 @@
   <body>
     <input id="listing_id" type="hidden" value="<%= listing._id %>">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-8">
+        <div class="row justify-content-center">
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
                 <!-- Avatar -->
                 <div class="pull-right">
-                    <div class="ma-avatar ma-avatar--small ma-avatar--border-minimal round">
-                        <a href="/users/<%=listing.owner._id%>"><img width="70" height="70" src="https://cdn.dribbble.com/users/2456229/screenshots/6376729/image.png" alt=""></a>
+                    <div class="row">
+                        <div class="ma-avatar ma-avatar--small ma-avatar--border-minimal round">
+                            <a href="/users/<%=listing.owner._id%>"><img width="70" height="70" src="https://cdn.dribbble.com/users/2456229/screenshots/6376729/image.png" alt=""></a>
+                        </div>
+                    </div> 
+                    <div class="row justify-content-center">
+                        <div class="ma-label ma-label--simple ma-label--simple--default"><a href="/users/<%=listing.owner._id%>"><%= listing.owner.name %></a></div>
                     </div>
-                    <div class="ma-label ma-label--simple ma-label--simple--large"><%= listing.owner.name %></div>
                 </div>
 
                 <!-- title + date -->
@@ -58,15 +63,17 @@
                     <button class="ma-btn ma-btn--small ma-btn--primary-without-bg" id='delete-listing'>Delete Listing</button>
                 <% } %>
             </div>
-
-            <div class="col-sm-4 offset-sm-6 space-top-3">
+            <div class="col-md-2">
+            <!-- leave this blank-->
+            </div>
+            <div class="col-md-3 space-top-3">
                 <div class="ma-box">
                     <div class="ma-box__title">Book this listing</div>
                     <div class="ma-box__content">
                         <!-- <div class="ma-form ma-form--basic"> -->
                         <div class="form-group">
                             <label for="input4">Pick your dates:</label>
-                            <input type="text" id="booking-form-date" class="ma-input ma-input--default">
+                            <input type="text" id="booking-form-date" class="ma-input ma-input--default ma-input--invalid">
                             <p class="ma-p ma-p--small font-weight-normal space-top-1">
                                 These will be the dates that you will be booked for
                             </p>
