@@ -107,6 +107,19 @@ var createBooking = function(req, res) {
   });
 };
 
+var getBookings = function(req, res) {
+  console.log("********", req.query)
+  var listingId = req.query.listingId
+
+  db.getListingBookings(listingId, function(err, bookings) {
+    if (err) {
+      res.status(500).json({'msg': err});
+    } else {
+      res.json(bookings);
+    }
+  })
+}
+
 var createReview = function(req, res) {
   var email = req.session.email
   var {listingId, title, text} = req.body
@@ -130,7 +143,8 @@ var routes = {
   updateListing: updateListing,
   deleteListing: deleteListing,
   createBooking: createBooking,
-  createReview: createReview
+  createReview: createReview,
+  getBookings: getBookings
 };
 
 

@@ -32,6 +32,7 @@ app.get('/home', routes.getHome);
 // Booking pages
 app.post('/createBooking', routes.createBooking);
 app.post('/createReview', routes.createReview);
+app.get('/getBookings', routes.getBookings);
 
 // Listing pages
 app.get('/newListing', routes.getListingForm);
