@@ -23,7 +23,7 @@ userSchema.statics.addUser = function(name, email, password, callback) {
         if (err) {
           callback(validCodes.serverError.num, err);
         } else {
-          callback(null, null); // success saving user
+          callback(null, user); // success saving user
         }
       });
     }
@@ -38,7 +38,7 @@ userSchema.statics.verifyCreds = function(email, password, callback) {
       callback(validCodes.accountNotExist.num, null);
     } else {
       if (password === user.password) {
-        callback(null, true); // sending true for verified creds back
+        callback(null, user); // sending user for verified creds back
       } else {
         callback(null, false);
       }

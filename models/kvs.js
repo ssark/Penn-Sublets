@@ -70,19 +70,19 @@ var deleteListing = function(id, callback) {
   })
 }
 
-var getUserListings = function(email, callback) {
-  User.findOne({ email: email }).populate('listings').exec(function(err, user) {
+var getUserListings = function(userId, callback) {
+  User.findOne({ _id: userId }).populate('listings').exec(function(err, user) {
     if (err) {
       callback(err, null);
     } else {
-      callback(null, user.listings);
+      callback(null, user);
     }
   })
 };
 
 // takes user instance
-var getUserBookings = function(email, callback) {
-  User.findOne({ email: email }, function(uerr, user) {
+var getUserBookings = function(userId, callback) {
+  User.findOne({ _id: userId }, function(uerr, user) {
     if (uerr) {
       callback(uerr, null);
     } else {
@@ -199,6 +199,16 @@ var getListingReviews = function(listingId, callback) {
   });
 };
 
+var getUserProfile = function(userId, callback) {
+  User.findOne({ _id: userId }).populate('listings').exec(function(err, user) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, user);
+    }
+  })
+}
+
 
 var db = {
   createListing: createListing,
@@ -210,7 +220,8 @@ var db = {
   createReview: createReview,
   getListingBookings: getListingBookings,
   getListingReviews: getListingReviews,
-  getUserBookings: getUserBookings
+  getUserBookings: getUserBookings,
+  getUserProfile: getUserProfile
 
 
 }

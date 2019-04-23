@@ -21,9 +21,10 @@ router.get('/signup', function (req, res, next) {
 router.post('/signup', function (req, res, next) {
   var {name, email, password} = req.body;
   User.addUser(name, email, password, function(errorNum, errormsg) {
-    if (errorNum === null && errormsg === null) {
+    if (errorNum === null && errormsg !== null) {
       // Render the home page
       req.session.email = email
+      req.session.user_id = user._id
       res.redirect('/home');
     } else {
       // Invalid signup
@@ -55,6 +56,8 @@ router.post('/login', function (req, res, next) {
     } else {
       // successful
       req.session.email = email
+      req.session.userId = verified._id
+      console.log(req.session)
       res.redirect('/home');
     }
   });

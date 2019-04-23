@@ -12,9 +12,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   </head>
   <body>
-    <h2><%= username%>'s Profile</h2>
+    <h2>My Profile</h2>
 
-    <h3>Listings</h3>
+    <h3>My Listings</h3>
     <ul>
       <% if (listings) { %>
         <% if (listings.length == 0) { %>
@@ -32,9 +32,9 @@
       <% } %>
     </ul>
 
+    <h3>My Bookings</h3>
+    <ul>
       <% if (bookings) { %>
-        <h3>My Bookings</h3>
-        <ul>
         <% if (bookings.length == 0) { %>
           <h4>No bookings yet!</h4>
         <% } else { %>
@@ -42,7 +42,7 @@
             <% var curr = bookings[i] %>
             <li>
             <h4>Listing: <%= curr.listing.title %></h4>
-            <h4>Dates: <%= moment(curr.date_from).format('MM-DD-YYYY') %> to  <%= moment(curr.date_to).format('MM-DD-YYYY') %></h4>
+            <h4>Dates: <%= moment(curr.date_from).format('DD-MM-YYY') %> to  <%= moment(curr.date_to).format('DD-MM-YYY') %></h4>
           </li>
           <% } %>
         <% } %>
@@ -51,5 +51,3 @@
 
   </body>
 </html>
-
-

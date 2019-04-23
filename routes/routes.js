@@ -14,12 +14,11 @@ var getIndex = function(req, res) {
 };
 
 var getHome = function(req, res) {
-  db.getUserListings(req.session.email, function(err, listings) {
+  db.getUserListings(req.session.userId, function(err, user) {
     if (err) {
       res.send(err)
     } else {
-      console.log(moment(listings[0].date_posted))
-      res.render('home.ejs', {user: req.session.email, allListings: listings});
+      res.render('home.ejs', {user: user.name, allListings: user.listings});
     }
   });
   
@@ -143,23 +142,30 @@ var getReviews = function(req, res) {
   })
 };
 
-var getMyProfile = function(req, res) {
-  var myEmail = req.session.email
+var getProfile = function(req, res) {
+  var myId = req.session.userId
+  var userId = req.params.userId
+  console.log('******* req query' + req.params.userId)
 
-  db.getUserListings(myEmail, function(lErr, listings) {
+  db.getUserListings(userId, function(lErr, user) {
     if (lErr) {
       res.status(500).send(lErr)
     } else {
-      db.getUserBookings(myEmail, function(err, bookings) {
-        if (err) {
-          res.status(500).send(lErr)
-        } else {
-          console.log(bookings)
-          res.render('profile.ejs', {bookings: bookings, listings: listings});
-        }
-      });
+      if (userId == myId) { // myProfile
+        db.getUserBookings(userId, function(err, bookings) {
+          if (err) {
+            res.status(500).send(lErr)
+          } else {
+            res.render('profile.ejs', {username: user.name, bookings: bookings, listings: user.listings});
+          }
+        });
+      } else { // someone else's profile
+        res.render('profile.ejs', {username: user.name, listings: user.listings, bookings: null});
+      }
     }
   });
+
+
 }
 
 var routes = {
@@ -175,7 +181,7 @@ var routes = {
   createReview: createReview,
   getBookings: getBookings,
   getReviews: getReviews,
-  getMyProfile: getMyProfile
+  getProfile: getProfile
 };
 
 

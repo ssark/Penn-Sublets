@@ -28,13 +28,14 @@ app.use(cookieSession({
 app.get('/', routes.getIndex);
 app.get('/home', routes.getHome);
 
-app.get('/myProfile', routes.getMyProfile);
+app.get('/users/:userId', routes.getProfile);
 
 // Booking pages
 app.post('/createBooking', routes.createBooking);
 app.post('/createReview', routes.createReview);
 app.get('/getBookings', routes.getBookings);
 app.get('/getReviews', routes.getReviews);
+
 
 // Listing pages
 app.get('/newListing', routes.getListingForm);
