@@ -182,8 +182,8 @@ $(document).ready(function () {
     FilePond.create(document.querySelector('.filepond'));
 
     var s3 = new AWS.S3({
-        accessKeyId: "AKIAI2PB7D3PXBP4F55A",
-      secretAccessKey: "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",
+        accessKeyId: "xx",
+      secretAccessKey: "xx",
       region: 'us-east-1'
     });
 
@@ -203,10 +203,6 @@ $(document).ready(function () {
                         console.log(err); 
                         return;
                     }
-                    //console.log("after the callback"); 
-                    //addImageToFamFriend(); 
-                    // pass file unique id back to filepond
-                    
 
                     $.ajax({
 						type: "POST",

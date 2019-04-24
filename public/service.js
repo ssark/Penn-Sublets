@@ -7,11 +7,11 @@ aws.config.update({
     // Your SECRET ACCESS KEY from AWS should go here,
     // Never share it!
     // Setup Env Variable, e.g: process.env.SECRET_ACCESS_KEY
-    secretAccessKey: "e6pLEOxq3z6ohyy6tzt2oBpzcvEv7FQ9p3XuzFx3",
+    secretAccessKey: "xx",
     // Not working key, Your ACCESS KEY ID from AWS should go here,
     // Never share it!
     // Setup Env Variable, e.g: process.env.ACCESS_KEY_ID
-    accessKeyId: "AKIAI2PB7D3PXBP4F55A",
+    accessKeyId: "xx",
     region: 'us-east-1' // region of your bucket
 });
 

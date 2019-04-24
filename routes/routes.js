@@ -22,6 +22,9 @@ var getIndex = function(req, res) {
 
 var getHome = function(req, res) {
   res.locals = req.session
+  if (req.session.email == undefined || req.session.email == null) {
+    res.locals.email = undefined
+  }
   db.getAllListings(function(err, listings) {
     if (err) {
       res.send(err)
@@ -232,6 +235,7 @@ var imageUpload = function(req, res) {
 }
 
 var getImage = function(req, res) {
+  console.log("*************imgid" + req.params.imageId)
   var params = { Bucket: 'pennsublet-listing-pictures', Key: req.params.imageId};
     s3.getObject(params, function(err, data) {
         res.writeHead(200, {'Content-Type': 'image/jpeg'});

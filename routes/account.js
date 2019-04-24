@@ -10,6 +10,9 @@ var validCodes = require('../public/validCodes')
 router.get('/signup', function (req, res, next) {
   // check for invalid entries to form
   res.locals = req.session
+  if (req.session.email == undefined || req.session.email == null) {
+    res.locals.email = undefined
+  }
   if (req.query.valid == validCodes.userExists.num) {
     res.render('signup.ejs', {message: validCodes.userExists.msg});
   } else if (req.query.valid == validCodes.serverError.num) {
@@ -39,6 +42,9 @@ router.post('/signup', function (req, res, next) {
 router.get('/login', function (req, res) {
   // check for invalid entries to login form
   res.locals = req.session
+  if (req.session.email == undefined || req.session.email == null) {
+    res.locals.email = undefined
+  }
   if (req.query.valid == validCodes.serverError.num) {
     res.render('login.ejs', {message: validCodes.serverError.msg});
   } else if (req.query.valid == validCodes.accountNotExist.num) {
