@@ -25,7 +25,7 @@ router.post('/signup', function (req, res, next) {
     if (errorNum === null && res !== null) {
       // Render the home page
       req.session.email = email
-      req.session.user_id = user._id
+      req.session.userId = user._id
       req.session.username = name
       res.locals = req.session
       res.redirect('/');
@@ -63,6 +63,7 @@ router.post('/login', function (req, res, next) {
       req.session.userId = verified._id
       req.session.username = verified.name
       res.locals = req.session
+      console.log(res.locals)
       res.redirect('/');
     }
   });

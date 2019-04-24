@@ -1,8 +1,10 @@
 <html>
   <head>
     <title>Edit Listing page</title>
+    <script src="/static/scripts/nested_level.js"></script>
   </head>
-  <body>
+  <body class="mainApp margin-reset">
+    <% include ./nav %>
     <h1>Edit Listing</h1>
     <form method="POST">
       Title: <br/>
@@ -12,4 +14,5 @@
       <button type="submit">Submit</button>
     </form>
   </body>
+  <% include ./feature_script %>
 </html>

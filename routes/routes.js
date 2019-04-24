@@ -4,6 +4,8 @@ var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
 var cookieSession = require('cookie-session')
 var moment = require('moment')
+var fs = require('fs');
+var multer = require('multer');
 
 var User = require('../models/user')
 var Listing = require('../models/listing')
@@ -164,27 +166,59 @@ var getProfile = function(req, res) {
   res.locals = req.session
   var myId = req.session.userId
   var userId = req.params.userId
-
+  console.log("myId: " + myId + " userId: " + userId)
   db.getUserListings(userId, function(lErr, user) {
     if (lErr) {
       res.status(500).send(lErr)
     } else {
+      console.log("user coming back: " + user)
       if (userId == myId) { // myProfile
         db.getUserBookings(userId, function(err, bookings) {
           if (err) {
             res.status(500).send(lErr)
           } else {
-            res.render('profile.ejs', {username: user.name, bookings: bookings, listings: user.listings});
+            res.render('profile.ejs', {curUsername: user.name, bookings: bookings, listings: user.listings});
           }
         });
       } else { // someone else's profile
-        res.render('profile.ejs', {username: user.name, listings: user.listings, bookings: null});
+        res.render('profile.ejs', {currUsername: user.name, listings: user.listings, bookings: null});
       }
     }
   });
-
-
 }
+
+var getSearchSug = function(req, res) {
+  console.log("in get search sug")
+  arr = []
+  term = req.body.search_term
+
+  db.searchListingTitle(term, function(lErr, listings) {
+    if (lErr) {
+      res.status(500).send(lErr)
+    } else {
+      db.searchUserName(term, function(uErr, users) {
+        if (uErr) {
+          res.status(500).send(uErr)
+        } else {
+          listings.forEach(function(l) {
+            arr.push({label: "Listing: " + l.title, value: l._id, isUser: 0})
+          })
+          users.forEach(function(u) {
+            arr.push({label: "User:" + u.name, value: u._id, isUser: 1})
+          })
+          res.send(arr)
+        }
+      })
+    }
+  })
+}
+
+// var savePhoto = function(req, res) {
+//   var newPic = new Picture();
+//   newPic.img.data = fs.readFileSync(req.files.userPhoto.path)
+//   newPic.img.contentType = 'image/png';
+//   newPic.save();
+// }
 
 var routes = {
   getIndex: getIndex,
@@ -199,7 +233,8 @@ var routes = {
   createReview: createReview,
   getBookings: getBookings,
   getReviews: getReviews,
-  getProfile: getProfile
+  getProfile: getProfile,
+  getSearchSug: getSearchSug
 };
 
 

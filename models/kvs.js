@@ -4,6 +4,8 @@ var Listing = require('./listing')
 var Booking = require('./booking')
 var Review = require('./review')
 var moment = require('moment')
+var fs = require('fs');
+var multer = require('multer');
 
 var createListing = function(email, title, description, callback) {
   User.findOne({email: email}, function(findErr, user) { 
@@ -220,6 +222,38 @@ var getAllListings = function(callback) {
   });
 }
 
+// callback (err, users)
+var getAllUsers = function(callback) {
+  User.find({}, function(err, data) {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, data)
+    }
+  });
+}
+
+// callback (err, listings)
+var searchListingTitle = function(term, callback) {
+  Listing.find({title: { "$regex": term, "$options": "i" }}).populate('owner').exec(function(err, data) {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, data)
+    }
+  });
+}
+
+// callback (err, users)
+var searchUserName = function(term, callback) {
+  User.find({name: { "$regex": term, "$options": "i" }}, function(err, data) {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, data)
+    }
+  });
+}
 
 var db = {
   createListing: createListing,
@@ -233,7 +267,10 @@ var db = {
   getListingReviews: getListingReviews,
   getUserBookings: getUserBookings,
   getUserProfile: getUserProfile,
-  getAllListings: getAllListings
+  getAllListings: getAllListings,
+  getAllUsers: getAllUsers,
+  searchListingTitle: searchListingTitle,
+  searchUserName: searchUserName
 
 
 }

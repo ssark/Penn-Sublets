@@ -1,55 +1,79 @@
 <html>
   <head>
-    <title>My Profile</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
-    <!-- <link rel="stylesheet" href="/theme/app.css"> -->
-    <link rel="stylesheet" type="text/css" href="/static/styles/styles.css"/>
+    <title><%= curUsername %></title>
+     <% include ./head %>
+    <script src="/static/scripts/nested_level.js"></script>
     <script src="/static/scripts/profile_script.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   </head>
-  <body>
-    <h2><%= username%>'s Profile</h2>
+  <body class="mainApp margin-reset">
+    <% include ./nav %>
 
-    <h3>Listings</h3>
-    <ul>
-      <% if (listings) { %>
-        <% if (listings.length == 0) { %>
-          <h4>No listings yet!</h4>
-        <% } else { %>
-          <% for(var i = 0; i < listings.length; i++) { %>
-            <% var curr = listings[i] %>
-            <li>
-            <h4>Title: <%= curr.title %></h4>
-            <h4>Description: <%= curr.description %></h4>
-            <h4>Date posted: <%= curr.date_posted %></h4>
-          </li>
-          <% } %>
-        <% } %>
-      <% } %>
-    </ul>
+    <div class="ma-subnav ma-subnav--tabs">
+      <nav class="container">
+        <div class="ma-subnav__item space-right-4">
+            <div id="bookings-tab-div" class="content active active">
+                <a class="link-reset" id="bookings-tab">Bookings</a>
+            </div>
+        </div>
 
-      <% if (bookings) { %>
-        <h3>My Bookings</h3>
-        <ul>
-        <% if (bookings.length == 0) { %>
-          <h4>No bookings yet!</h4>
-        <% } else { %>
-          <% for(var i = 0; i < bookings.length; i++) { %>
-            <% var curr = bookings[i] %>
-            <li>
-            <h4>Listing: <%= curr.listing.title %></h4>
-            <h4>Dates: <%= moment(curr.date_from).format('MM-DD-YYYY') %> to  <%= moment(curr.date_to).format('MM-DD-YYYY') %></h4>
-          </li>
-          <% } %>
-        <% } %>
-      <% } %>
+        <div class="ma-subnav__item space-right-4">
+            <div id="listings-tab-div" class="content">
+                <a class="link-reset" id="listings-tab">Listings</a>
+            </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container space-top-3">
+      <div class="row">
+        <!-- <div class="col-sm-1"></div> -->
+        <div class="col-md-9">
+          <h3 class="strong"><%= curUsername %> </h3>
+
+          <hr class="ma-separator">
+          <div id="bookings-div">
+            <% if (bookings) { %>
+                <h3>Bookings</h3>
+                <ul>
+                <% if (bookings.length == 0) { %>
+                  <h4>No bookings yet!</h4>
+                <% } else { %>
+                  <% for(var i = 0; i < bookings.length; i++) { %>
+                    <% var curr = bookings[i] %>
+                    <li>
+                    <h4>Listing: <%= curr.listing.title %></h4>
+                    <h4>Dates: <%= moment(curr.date_from).format('MM-DD-YYYY') %> to  <%= moment(curr.date_to).format('MM-DD-YYYY') %></h4>
+                  </li>
+                  <% } %>
+                <% } %>
+            <% } %>
+          </div>
+
+          <div id="listings-div" style="display: none;">
+            <h3>Listings</h3>
+
+            <% if (listings) { %>
+              <% if (listings.length == 0) { %>
+                <h4>No listings yet!</h4>
+              <% } else { %>
+                <% for(var i = 0; i < listings.length; i++) { %>
+                  <% var curr = listings[i] %>
+                  <h3 class="strong"><a class="ma-label ma-label--simple ma-label--simple--secondary" href="/listings/<%=curr._id%>"><%= curr.title %></a></h3>
+                  <p class="ma-p ma-p--default"><%= curr.description %></p>
+                  <h5 class="ma-label ma-label--simple ma-label--simple--default">Listed by: <a class="ma-label ma-label--simple ma-label--simple--primary" href="/users/<%=curr.owner._id%>"><%= curUsername %></a> on <%= moment(curr.date_posted).format('MMMM DD, YYYY') %></h5>
+                  <hr class="ma-separator">
+                <% } %>
+              <% } %>
+            <% } %>
+          </div>
+
+        </div>
+      </div>
+    </div>
     </ul>
 
   </body>
+  <% include ./feature_script %>
 </html>
 
 

@@ -9,15 +9,15 @@
     </div>
 
     <!-- <! Search box > -->
-    <div class="ma-header__search-container">
-        <form class="form-content hidden-xs">
-            <div class="ma-search-bar">
-                <i class="ma-search-bar__icon" data-feather="search"></i>
-                <label class="screen-reader-only" aria-hidden="true">Search</label>
-                <input class="ma-search-bar__input" placeholder="Search" type="text">
-            </div>
-        </form>
-    </div>
+      <div class="ma-header__search-container">
+          <form class="form-content hidden-xs">
+              <div class="ma-search-bar">
+                  <i class="ma-search-bar__icon" data-feather="search"></i>
+                  <label class="screen-reader-only" aria-hidden="true">Search</label>
+                  <input class="ui-widget form-control ma-search-bar__input" placeholder="Search" type="text" id="search-box">
+              </div>
+          </form>
+      </div>
 
     <!-- <! Navigation Container > -->
     <div class="ma-header__nav-container">
@@ -44,9 +44,9 @@
 
                   <!-- <! Avatar button > -->
                   <li>
-                    <a class="ma-nav-list__item__btn link-reset" href>
+                    <a class="ma-nav-list__item__btn link-reset" href="/users/<%=userId%>">
                         <div class="content">
-                            <div class="ma-avatar ma-avatar--tiny ma-avatar--border-minimal round">
+                            <div class="ma-avatar ma-avatar--tiny ma-avatar--border-primary round">
                                 <img width="32" height="32" src="https://cdn.dribbble.com/users/2456229/screenshots/6376729/image.png" alt="">
                             </div>
                         </div>

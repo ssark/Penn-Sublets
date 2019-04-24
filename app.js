@@ -4,6 +4,9 @@ var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
 var mongoose = require('mongoose');
 var app = express();
+var fs = require('fs');
+var multer = require('multer');
+
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/penn-sublet')
 
 var routes = require('./routes/routes.js');
@@ -24,14 +27,15 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
 
-// app.use(function(req, res, next) {
-//   res.locals = req.session;
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.locals = req.session;
+  next();
+});
 
 // Misc
 app.get('/', routes.getHome);
 
+app.post('/searchSug', routes.getSearchSug)
 app.get('/users/:userId', routes.getProfile);
 
 // Booking pages

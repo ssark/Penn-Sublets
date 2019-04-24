@@ -3,7 +3,7 @@ $(document).ready(function () {
   $("#search-box").autocomplete({
     source: function (request, response) {
       console.log("in source function. search term: " + request.term)
-      $.post('./searchSug',
+      $.post('../searchSug',
         {
           search_term: request.term
         },
@@ -16,11 +16,10 @@ $(document).ready(function () {
     minLength: 1,
     select: function(event, ui) {
       if (ui.item.isUser == 0) {
-        window.location.href = "./listings/" + ui.item.value;
+        window.location.href = "../listings/" + ui.item.value;
       } else {
-        window.location.href = "./users/" + ui.item.value;
+        window.location.href = "../users/" + ui.item.value;
       }
     }
   });
 });
-
