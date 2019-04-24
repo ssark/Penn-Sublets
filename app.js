@@ -42,7 +42,7 @@ app.use(function(req, res, next) {
 });
 
 app.post('/image-upload/:listingId', routes.imageUpload);
-
+app.get('/images', routes.getListingImages);
 app.get('/image/:imageId', routes.getImage);
 
 // Misc

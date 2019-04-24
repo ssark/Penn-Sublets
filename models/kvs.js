@@ -278,6 +278,17 @@ var addImageListing = function(listingId, imageId, callback) {
   });
 } 
 
+
+var getListingImages = function(listingId, callback) {
+  Listing.findById(listingId, function(findErr, listing) { 
+    if (findErr || listing.images == null) {
+      callback(findErr, null);
+    } else {
+      callback(null, listing.images)
+    }
+  });
+} 
+
 var db = {
   createListing: createListing,
   getListingById: getListingById,
@@ -294,7 +305,8 @@ var db = {
   getAllUsers: getAllUsers,
   searchListingTitle: searchListingTitle,
   searchUserName: searchUserName,
-  addImageListing: addImageListing
+  addImageListing: addImageListing,
+  getListingImages: getListingImages
 
 
 }

@@ -38,6 +38,22 @@ $(document).ready(function () {
     $("#reviews-div").append(htmlCode);
   	
   });
+	var allImgs = []
+	$.get('../images', {listingId: listingId}, function(imgs) {
+      Object.keys(imgs).forEach(function(k) {
+        allImgs.push(imgs[k])
+        allImgs.push(imgs[k])
+      })
+      	$("#photo-div").nanogallery2( {
+		    // ### gallery settings ### 
+		    thumbnailHeight:  200,
+		    thumbnailWidth:   400,
+		    itemsBaseURL:     '../image/',
+		    
+		    // ### gallery content ### 
+		    items: allImgs
+	  	});
+	});
 
 	var allRanges = []
   // get all booking dates
@@ -140,6 +156,8 @@ $(document).ready(function () {
 	  $('#booking-form-date').addClass('ma-input--invalid')
 	});
 
+	// <img height="200" width="462" src="../image/5cbcd159dbf212d0c3e07b0b1556102976616" />
+
 	    // We want to preview images, so we need to register the Image Preview plugin
     FilePond.registerPlugin(
       
@@ -194,11 +212,11 @@ $(document).ready(function () {
 						}
 					})
 					.done(function(data) {
-						alert("IN DONE")
+						console.log("UPLOADED")
 					})
 					.fail(function(data) {
 						// alert("Error: " + data.responseJSON.msg)
-						alert("FAIL")
+						alert("Could not upload. Please try again!")
 					})
                     console.log("added image " + data.Key);
                     load(data.Key);

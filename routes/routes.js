@@ -240,6 +240,27 @@ var getImage = function(req, res) {
   });
 }
 
+var getListingImages = function (req, res) {
+  var listingId = req.query.listingId
+  console.log("*************************" + listingId)
+  db.getListingImages(listingId, function(err, imgs) {
+    if (err || imgs == null) {
+      res.status(400).send(err)
+    } else {
+      console.log("**********", imgs)
+      data = {}
+      for (var i = 0; i < imgs.length; i++) {
+        if (i == 3) {
+          break;
+        } else {
+          data[i] = { src: imgs[i], srct: imgs[i]}
+        }
+      }
+      res.send(data)
+    }
+  })
+}
+
 var routes = {
   getIndex: getIndex,
   getHome: getHome,
@@ -256,7 +277,8 @@ var routes = {
   getProfile: getProfile,
   getSearchSug: getSearchSug,
   imageUpload: imageUpload,
-  getImage: getImage
+  getImage: getImage,
+  getListingImages: getListingImages
 };
 
 
