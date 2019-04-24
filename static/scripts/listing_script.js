@@ -30,8 +30,8 @@ $(document).ready(function () {
 	    reviews.forEach(function(r) {
 	  		htmlCode += "<h5 class=\"strong\">"+ r.title + "</h5>"
 	  		htmlCode += "<p class=\"ma-p ma-p--small\">"+ r.text + "</p>"
-	  		htmlCode += "<div class=\"ma-label ma-label--simple ma-label--simple--small\"> <a href=\"/users/" + r.user._id + "\">" + r.user.name + "</a> - "
-	  		htmlCode += moment(r.date_posted).format('MMMM D, YYYY') + "</div>"
+	  		htmlCode += "<div class=\"ma-label ma-label--simple ma-label--simple--small\"> <a href=\"/users/" + r.user._id + "\">" + r.user.name + "</a> "
+	  		htmlCode += "on " + moment(r.date_posted).format('MMMM D, YYYY') + "</div>"
 	  		htmlCode += "<hr class=\"ma-separator\">"
 	  	})
     }
@@ -100,8 +100,8 @@ $(document).ready(function () {
 				htmlCode = ""
 			  	htmlCode += "<h5 class=\"strong\">"+ data.title + "</h5>"
 		  		htmlCode += "<p class=\"ma-p ma-p--small\">"+ data.text + "</p>"
-		  		htmlCode += "<div class=\"ma-label ma-label--simple ma-label--simple--small\"> <a href=\"/users/" + data.user._id + "\">" + data.user.name + "</a> - "
-		  		htmlCode += moment(data.date_posted).format('MMMM D, YYYY') + "</div>"
+		  		htmlCode += "<div class=\"ma-label ma-label--simple ma-label--simple--small\"> <a href=\"/users/" + data.user._id + "\">" + data.user.name + "</a> "
+		  		htmlCode += "on" + moment(data.date_posted).format('MMMM D, YYYY') + "</div>"
 		  		htmlCode += "<hr class=\"ma-separator\">"
 		  		if (allReviews.length == 0) {
 		  			$("#reviews-div").html(htmlCode);
