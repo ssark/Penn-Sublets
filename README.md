@@ -7,11 +7,14 @@ Penn's sublet marketplace. Final project for CIS 197 Javascript Spring '19.
 3) Go to localhost:3000
 
 ## Features
-1) Users can Log in/sign up
-2) can CRUD listings for apartments
-3) Image uploads
-4) Search box
-5) Listing reviews
+- Users can log in/sign up
+- CRUD listings for apartments
+- Reviews for listing and dynamic rendering upon creation
+- Bookings for listings
+- Date range picker with blocked out dates for past dates and existing bookings
+- Dynamic image uploads and animated image gallery rendering
+- Search box with dynamic autocomplete suggestions
+- Airbnb-esque UI 
 
 ## Technologies Used
 1) Node.js

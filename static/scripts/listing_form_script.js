@@ -1,26 +1,5 @@
 $(document).ready(function () {
 	console.log("in listing form script")
-	// $("#post-button").click(function() {
-	// 	var title = $('#title').val()
-	// 	var desc = $('#desc').val()
-
-	// 	$.ajax({
-	// 			type: "POST",
-	// 			url: './newListing',
-	// 			data: {
-	// 				title: title,
-	// 				description: desc
-	// 			},
-	// 			dataType: 'json'
-	// 		})
-	// 		.done(function(data) {
-	// 			console.log(data)
-	// 		})
-	// 		.fail(function(data) {
-	// 			alert("Error: " + data.responseJSON.msg)
-	// 		})
-	// });
-
     // We want to preview images, so we need to register the Image Preview plugin
     FilePond.registerPlugin(
       
@@ -49,7 +28,6 @@ $(document).ready(function () {
     FilePond.setOptions({
         server: {
             process: function(fieldName, file, metadata, load, error, progress, abort) {
-                console.log("hi we are in s3 upload"); 
                 s3.upload({
                     Bucket: 'pennsublet-listing-pictures',
                     Key: "bro" + file.name,
