@@ -70,6 +70,9 @@ $(document).ready(function () {
 			})
 			.done(function(data) {
 				alert(data.msg)
+				allRanges.push({s: moment(startDate), e: moment(endDate)})
+				var oldVal = $('#booking-form-date').val();
+				$('#booking-form-date').val('Booked for ' + oldVal)
 			})
 			.fail(function(data) {
 				alert("Error: " + data.responseJSON.msg)
