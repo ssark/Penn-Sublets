@@ -5,7 +5,8 @@ const listingSchema = new Schema({
   owner: { type: Schema.Types.ObjectId, ref: 'User' },
   title: { type: String, required: true},
   description: { type: String, required: true},
-  date_posted: { type: Date, default: Date.now }
+  date_posted: { type: Date, default: Date.now },
+  images: [{type: String}]
 });
 
 

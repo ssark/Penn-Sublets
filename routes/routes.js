@@ -11,6 +11,11 @@ var User = require('../models/user')
 var Listing = require('../models/listing')
 var db = require('../models/kvs.js')
 
+var service = require('../public/service.js')
+var upload = service.upload
+var s3 = service.s3
+const singleUpload = upload.single('image')
+
 var getIndex = function(req, res) {
     res.render('index.ejs');
 };
@@ -213,12 +218,31 @@ var getSearchSug = function(req, res) {
   })
 }
 
-// var savePhoto = function(req, res) {
-//   var newPic = new Picture();
-//   newPic.img.data = fs.readFileSync(req.files.userPhoto.path)
-//   newPic.img.contentType = 'image/png';
-//   newPic.save();
-// }
+var imageUpload = function(req, res) {
+  var listingId = req.params.listingId
+  singleUpload(req, res, function(err, data) {
+    if (err) {
+      return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
+    }
+    var newImageId = req.file.key
+    db.addImageListing(listingId, newImageId, function(err, listing) {
+      if (err) {
+        res.send(err)
+      } else {
+        res.json(listing)
+      }
+    })
+  });
+}
+
+var getImage = function(req, res) {
+  var params = { Bucket: 'pennsublet-listing-pictures', Key: req.params.imageId};
+    s3.getObject(params, function(err, data) {
+        res.writeHead(200, {'Content-Type': 'image/jpeg'});
+        res.write(data.Body, 'binary');
+        res.end(null, 'binary');
+  });
+}
 
 var routes = {
   getIndex: getIndex,
@@ -234,7 +258,9 @@ var routes = {
   getBookings: getBookings,
   getReviews: getReviews,
   getProfile: getProfile,
-  getSearchSug: getSearchSug
+  getSearchSug: getSearchSug,
+  imageUpload: imageUpload,
+  getImage: getImage
 };
 
 

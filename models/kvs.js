@@ -261,6 +261,23 @@ var searchUserName = function(term, callback) {
   });
 }
 
+var addImageListing = function(listingId, imageId, callback) {
+  Listing.findById(listingId, function(findErr, listing) { 
+    if (listing) {
+      listing.images.push(imageId);
+      listing.save(function(err) {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, listing)
+        }
+      });
+    } else {
+      callback(findErr, null);
+    }
+  });
+} 
+
 var db = {
   createListing: createListing,
   getListingById: getListingById,
@@ -276,7 +293,8 @@ var db = {
   getAllListings: getAllListings,
   getAllUsers: getAllUsers,
   searchListingTitle: searchListingTitle,
-  searchUserName: searchUserName
+  searchUserName: searchUserName,
+  addImageListing: addImageListing
 
 
 }

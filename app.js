@@ -6,6 +6,9 @@ var mongoose = require('mongoose');
 var app = express();
 var fs = require('fs');
 var multer = require('multer');
+var multerS3 = require('multer-s3');
+var aws = require('aws-sdk');
+var moment = require('moment')
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/penn-sublet')
 
@@ -31,6 +34,10 @@ app.use(function(req, res, next) {
   res.locals = req.session;
   next();
 });
+
+app.post('/image-upload/:listingId', routes.imageUpload);
+
+app.get('/image/:imageId', routes.getImage);
 
 // Misc
 app.get('/', routes.getHome);
