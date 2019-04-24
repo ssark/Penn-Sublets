@@ -41,8 +41,8 @@ $(document).ready(function () {
     FilePond.create(document.querySelector('.filepond'));
 
     var s3 = new AWS.S3({
-        accessKeyId: "AKIAI2PB7D3PXBP4F55A",
-      secretAccessKey: "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",
+        accessKeyId: "xx",
+      secretAccessKey: "xx",
       region: 'us-east-1'
     });
 
