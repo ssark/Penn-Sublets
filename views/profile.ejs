@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title><%= curUsername %></title>
+    <title><%= currUsername %></title>
      <% include ./head %>
     <script src="/static/scripts/nested_level.js"></script>
     <script src="/static/scripts/profile_script.js"></script>
@@ -28,12 +28,13 @@
       <div class="row">
         <!-- <div class="col-sm-1"></div> -->
         <div class="col-md-9">
-          <h3 class="strong"><%= curUsername %> </h3>
+          <h3 class="strong"><%= currUsername %> </h3>
 
           <hr class="ma-separator">
           <div id="bookings-div">
-            <% if (bookings) { %>
-                <h3>Bookings</h3>
+            <h3>Bookings</h3>
+            <% if (bookings !== null || bookings) { %>
+              <% console.log('im in bookings') %>
                 <ul>
                 <% if (bookings.length == 0) { %>
                   <h4>No bookings yet!</h4>
@@ -46,7 +47,9 @@
                   </li>
                   <% } %>
                 <% } %>
-            <% } %>
+            <% } else {%>
+              <h4>No bookings yet!</h4>
+            <% }  %>
           </div>
 
           <div id="listings-div" style="display: none;">
@@ -60,7 +63,7 @@
                   <% var curr = listings[i] %>
                   <h3 class="strong"><a class="ma-label ma-label--simple ma-label--simple--secondary" href="/listings/<%=curr._id%>"><%= curr.title %></a></h3>
                   <p class="ma-p ma-p--default"><%= curr.description %></p>
-                  <h5 class="ma-label ma-label--simple ma-label--simple--default">Listed by: <a class="ma-label ma-label--simple ma-label--simple--primary" href="/users/<%=curr.owner._id%>"><%= curUsername %></a> on <%= moment(curr.date_posted).format('MMMM DD, YYYY') %></h5>
+                  <h5 class="ma-label ma-label--simple ma-label--simple--default">Listed by: <a class="ma-label ma-label--simple ma-label--simple--primary" href="/users/<%=curr.owner._id%>"><%= currUsername %></a> on <%= moment(curr.date_posted).format('MMMM DD, YYYY') %></h5>
                   <hr class="ma-separator">
                 <% } %>
               <% } %>

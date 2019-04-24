@@ -177,7 +177,7 @@ var getProfile = function(req, res) {
           if (err) {
             res.status(500).send(lErr)
           } else {
-            res.render('profile.ejs', {curUsername: user.name, bookings: bookings, listings: user.listings});
+            res.render('profile.ejs', {currUsername: user.name, bookings: bookings, listings: user.listings});
           }
         });
       } else { // someone else's profile

@@ -63,13 +63,19 @@ var updateListing = function(id, title, description, callback) {
 
 // callback (err, data)
 var deleteListing = function(id, callback) {
-  Listing.findByIdAndRemove(id, function(err, data) {
-    if (err) {
-      callback(err, null);
+  Booking.find({listing: id}).remove(function(bErr, bookings) {
+    if (bErr) {
+      callback(bErr, null);
     } else {
-      callback(null, data);
+      Listing.findByIdAndRemove(id, function(lErr, listing) {
+        if (lErr) {
+          callback(lErr, null);
+        } else {
+          callback(null, listing);
+        }
+      });
     }
-  })
+  });
 }
 
 var getUserListings = function(userId, callback) {
