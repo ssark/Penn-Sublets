@@ -70,8 +70,14 @@
 
                 <% if (curr == 1) { %>
                     <hr class="ma-separator">
+                                      Drop your images here
+                  <input type="file" class="filepond" name="filepond" multiple data-max-file-size="3MB" data-max-files="4" id="file-upload">
+
+                  <hr class="ma-separator">
                     <!-- delete listing button -->
-                    <button class="ma-btn ma-btn--small ma-btn--secondary-without-bg" id='delete-listing'>Delete Listing</button>
+                  <button class="ma-btn ma-btn--small ma-btn--secondary-without-bg" id='delete-listing'>Delete Listing</button>
+                    
+
                 <% } %>
             </div>
             <div class="col-md-1"></div>
@@ -115,6 +121,11 @@
             <% } %>
         </div>
     </div>
+<!--     <div id="lightgallery">
+      <a href="../image/5cbcca0589ae8fcf151a12ff1556101966783">
+          <img src="../image/5cbcca0589ae8fcf151a12ff1556101966783" />
+      </a>
+    </div> -->
   </body>
 <% include ./feature_script %>
 </html>

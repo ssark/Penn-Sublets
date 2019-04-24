@@ -139,4 +139,71 @@ $(document).ready(function () {
 	  endDate = end.format('YYYY-MM-DD')
 	  $('#booking-form-date').addClass('ma-input--invalid')
 	});
+
+	    // We want to preview images, so we need to register the Image Preview plugin
+    FilePond.registerPlugin(
+      
+      // encodes the file as base64 data
+      FilePondPluginFileEncode,
+      
+      // validates the size of the file
+      FilePondPluginFileValidateSize,
+      
+      // corrects mobile image orientation
+      FilePondPluginImageExifOrientation,
+      
+      // previews dropped images
+      FilePondPluginImagePreview
+    );
+
+
+    FilePond.create(document.querySelector('.filepond'));
+
+    var s3 = new AWS.S3({
+        accessKeyId: "AKIAI2PB7D3PXBP4F55A",
+      secretAccessKey: "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",
+      region: 'us-east-1'
+    });
+
+    FilePond.setOptions({
+        server: {
+            process: function(fieldName, file, metadata, load, error, progress, abort) {
+                console.log("hi we are in s3 upload"); 
+                s3.upload({
+                    Bucket: 'pennsublet-listing-pictures',
+                    Key: listingId + moment(),
+                    Body: file,
+                    ContentType: file.type,
+                    ACL: 'public-read'
+                }, function(err, data) {
+                    if (err) {
+                        error('Something went wrong');
+                        console.log(err); 
+                        return;
+                    }
+                    //console.log("after the callback"); 
+                    //addImageToFamFriend(); 
+                    // pass file unique id back to filepond
+                    
+
+                    $.ajax({
+						type: "POST",
+						url: '../image-upload/'+listingId,
+						data: {
+							imageId: data.Key
+						}
+					})
+					.done(function(data) {
+						alert("IN DONE")
+					})
+					.fail(function(data) {
+						// alert("Error: " + data.responseJSON.msg)
+						alert("FAIL")
+					})
+                    console.log("added image " + data.Key);
+                    load(data.Key);
+                });
+	        }
+        }
+    });
 })

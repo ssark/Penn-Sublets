@@ -219,20 +219,16 @@ var getSearchSug = function(req, res) {
 }
 
 var imageUpload = function(req, res) {
+  console.log("IN IMAGE UPLOAD ROUTES")
   var listingId = req.params.listingId
-  singleUpload(req, res, function(err, data) {
-    if (err) {
-      return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
-    }
-    var newImageId = req.file.key
-    db.addImageListing(listingId, newImageId, function(err, listing) {
+    db.addImageListing(listingId, req.body.imageId, function(err, listing) {
       if (err) {
         res.send(err)
       } else {
+        console.log("didnt err")
         res.json(listing)
       }
     })
-  });
 }
 
 var getImage = function(req, res) {
