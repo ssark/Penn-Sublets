@@ -209,7 +209,7 @@ var getSearchSug = function(req, res) {
             arr.push({label: "Listing: " + l.title, value: l._id, isUser: 0})
           })
           users.forEach(function(u) {
-            arr.push({label: "User:" + u.name, value: u._id, isUser: 1})
+            arr.push({label: "User: " + u.name, value: u._id, isUser: 1})
           })
           res.send(arr)
         }

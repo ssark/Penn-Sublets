@@ -35,16 +35,14 @@
             <h3>Bookings</h3>
             <% if (bookings !== null || bookings) { %>
               <% console.log('im in bookings') %>
-                <ul>
                 <% if (bookings.length == 0) { %>
                   <h4>No bookings yet!</h4>
                 <% } else { %>
                   <% for(var i = 0; i < bookings.length; i++) { %>
                     <% var curr = bookings[i] %>
-                    <li>
-                    <h4>Listing: <%= curr.listing.title %></h4>
-                    <h4>Dates: <%= moment(curr.date_from).format('MM-DD-YYYY') %> to  <%= moment(curr.date_to).format('MM-DD-YYYY') %></h4>
-                  </li>
+                  <h3 class="strong"><a class="ma-label ma-label--simple ma-label--simple--primary" href="/listings/<%=curr.listing._id%>"><%= curr.listing.title %></a></h3>
+                  <h5 class="ma-label ma-label--simple ma-label--simple--default">From</h5> <h4 class="ma-label ma-label--simple ma-label--simple--default"><%= moment(curr.date_from).format('ddd MMMM DD, YYYY') %></h4> to <h4 class="ma-label ma-label--simple ma-label--simple--default"><%= moment(curr.date_to).format('ddd MMMM DD, YYYY') %></h4>
+                  <hr class="ma-separator">
                   <% } %>
                 <% } %>
             <% } else {%>
@@ -61,9 +59,9 @@
               <% } else { %>
                 <% for(var i = 0; i < listings.length; i++) { %>
                   <% var curr = listings[i] %>
-                  <h3 class="strong"><a class="ma-label ma-label--simple ma-label--simple--secondary" href="/listings/<%=curr._id%>"><%= curr.title %></a></h3>
+                  <h3 class="strong"><a class="ma-label ma-label--simple ma-label--simple--primary" href="/listings/<%=curr._id%>"><%= curr.title %></a></h3>
                   <p class="ma-p ma-p--default"><%= curr.description %></p>
-                  <h5 class="ma-label ma-label--simple ma-label--simple--default">Listed by: <a class="ma-label ma-label--simple ma-label--simple--primary" href="/users/<%=curr.owner._id%>"><%= currUsername %></a> on <%= moment(curr.date_posted).format('MMMM DD, YYYY') %></h5>
+                  <h4 class="ma-label ma-label--simple ma-label--simple--default">Listed by: <a class="ma-label ma-label--simple ma-label--simple--secondary" href="/users/<%=curr.owner._id%>"><%= currUsername %></a> on <%= moment(curr.date_posted).format('MMMM DD, YYYY') %></h4>
                   <hr class="ma-separator">
                 <% } %>
               <% } %>
